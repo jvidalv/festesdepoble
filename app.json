@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "Festes de Poble",
+    "slug": "festes-de-poble",
+    "privacy": "public",
+    "sdkVersion": "33.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ff7200"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "josep.festespoble",
+      "supportsTablet": false,
+      "config" : {
+        "googleMapsApiKey": "AIzaSyBfe_U0pfrpqYjkxkcUVpo5W7yxAs1_hhg"
+      }
+    },
+    "android": {
+      "package": "josep.festespoble",
+      "versionCode": 1,
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBfe_U0pfrpqYjkxkcUVpo5W7yxAs1_hhg"
+        }
+      }
+    }
+  }
+}
