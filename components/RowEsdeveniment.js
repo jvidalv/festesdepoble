@@ -8,11 +8,13 @@ import {
   View,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Colors from '../constants/Colors';
 
-export default function RowEsdeveniment({ event, callback }) {
+export default function RowEsdeveniment(props) {
+  const {event, index, callback} = props;
   return (
     <TouchableOpacity
-      style={[styles.Row, {backgroundColor: (event.id % 2 ? 'white' : 'gray')}]}
+      style={[styles.Row, {backgroundColor: (index % 2 ? Colors.llistat1 : Colors.llistat2)}]}
       onPress={callback}
       delayPressIn={50}
       >
@@ -29,9 +31,12 @@ export default function RowEsdeveniment({ event, callback }) {
           {event.nom}
         </Text>
         <Text style={styles.TextRightBottom}>
-          <Ionicons name="md-pin" size={12} color="black" />
+          {/* <Ionicons name="md-pin" size={12} color="black" /> */}
           {event.localitzacio}
         </Text>
+      </View>
+      <View style={styles.ContainerRight}>
+        <Ionicons name="md-arrow-dropright-circle" size={20} color="black" />
       </View>
     </TouchableOpacity>
   )
@@ -48,6 +53,11 @@ const styles = StyleSheet.create({
   ContainerLeft:{
     alignItems: 'flex-end',
     width: '20%',
+  },
+  ContainerRight:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '10%',
   },
   TextLeft:{
     fontSize: 12,

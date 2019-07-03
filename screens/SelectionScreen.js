@@ -8,8 +8,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import NavigationService from '../components/NavigationService.js';
 import RowPoble from '../components/RowPoble';
+
+import Colors from '../constants/Colors';
+import { Ionicons } from '@expo/vector-icons';
 import logo from '../assets/images/logo.png';
 
 const pobles = [
@@ -50,6 +53,10 @@ const pobles = [
   },
 ]
 
+const AnarAContacta = ( ) => {
+  NavigationService.navigate('Contactar');
+}
+
 export default function EventScreen( props ) {
   return (
     <ScrollView style={styles.container}>
@@ -61,11 +68,13 @@ export default function EventScreen( props ) {
             <RowPoble key={poble.id} poble={poble} />
           )) }
         </View>
-        <View style={{alignItems: 'center', marginTop: 15}}>
-          <Text style={{fontWeight: 'bold'}}>
-            Vols afegir el teu poble?
+        <TouchableOpacity
+          onPress={AnarAContacta}
+          style={styles.footer}>
+          <Text>
+            Vols afegir el teu poble o tens alguna sugerencia?
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   )
@@ -74,6 +83,7 @@ export default function EventScreen( props ) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.fondo
   },
   contentContainer : {
     padding: 10,
@@ -83,6 +93,10 @@ const styles = StyleSheet.create({
   logo : {
     resizeMode: 'contain', alignItems: 'flex-start',  width: '100%'
   },
+  footer : {
+    alignItems: 'center',
+    marginTop: 25
+  }
 
 });
 

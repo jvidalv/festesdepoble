@@ -10,8 +10,7 @@ import {
 } from 'react-native';
 import MapViewModal from '../components/MapViewModal';
 import { Ionicons } from '@expo/vector-icons';
-
-
+import Colors from '../constants/Colors';
 
 export default function EventScreen( props ) {
   const { event } = props.navigation.state.params;
@@ -47,7 +46,7 @@ export default function EventScreen( props ) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.llistat1,
   },
   contentContainer : {
     padding: 10,
@@ -73,18 +72,20 @@ EventScreen.navigationOptions = ({ navigation }) => {
   return {
     title: event.dia + ' a les ' + event.horaFinal,
     headerStyle: {
-      backgroundColor: 'white',
+      backgroundColor: Colors.corporatiu,
     },
-    headerTintColor: 'black',
+    headerTintColor: Colors.titolsPantalles,
     headerTitleStyle: {
       fontWeight: 'bold',
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
     },
     headerRight: (
-       <View style={{flexDirection: "row", justifyContent: "flex-end", paddingRight:10, width: 120}}>
-         <Text style={[{paddingHorizontal: 5}, event.finalitzat ? {backgroundColor: 'red', color: 'white'} : {backgroundColor: 'blue', color: 'white'} ]}>
-           {event.estat}
-         </Text>
+       <View style={{flexDirection: "row",justifyContent: "flex-end",paddingRight:10, width: 120}}>
+         <TouchableOpacity
+            onPress={() => navigation.openDrawer()}
+           >
+             <Ionicons name="md-menu" size={22} color={Colors.titolsPantalles} />
+         </TouchableOpacity>
        </View>
      )
   }

@@ -1,14 +1,13 @@
-const tintColor = '#2f95dc';
+const corporatiu = '#ff7200';
+const fondo = '#f7bc8b';
+const llistat1 = '#f8d2b4';
+const llistat2 = '#f7e1cf';
+const titolsPantalles = "#ffffff";
 
 export default {
-  tintColor,
-  tabIconDefault: '#ccc',
-  tabIconSelected: tintColor,
-  tabBar: '#fefefe',
-  errorBackground: 'red',
-  errorText: '#fff',
-  warningBackground: '#EAEB5E',
-  warningText: '#666804',
-  noticeBackground: tintColor,
-  noticeText: '#fff',
+  corporatiu,
+  fondo,
+  titolsPantalles,
+  llistat1,
+  llistat2
 };

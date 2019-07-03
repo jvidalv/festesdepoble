@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import NavigationService from '../components/NavigationService.js';
+import Colors from '../constants/Colors';
 
 const canviarPoble = () => {
   const eliminarDades = async () => await AsyncStorage.removeItem('poble')
@@ -50,7 +51,7 @@ export default function EventScreen( props ) {
         <Text> Carregant poble ... </Text>
       </View> )
     }
-    <View style={styles.containerOpcions}>
+    <View style={[styles.containerOpcions, { backgroundColor : Colors.llistat1 }]}>
       <View style={styles.containerIcona}>
         <Ionicons name="md-log-out" size={18} color="black" />
       </View>
@@ -61,7 +62,7 @@ export default function EventScreen( props ) {
         <Text style={styles.text}>Canviar de poble</Text>
       </TouchableOpacity>
     </View>
-    <View style={[styles.containerOpcions, {backgroundColor : 'gray'}]}>
+    <View style={[styles.containerOpcions, { backgroundColor : Colors.llistat2 }]}>
       <View style={styles.containerIcona}>
         <Ionicons name="md-phone-portrait" size={18} color="black" />
       </View>
@@ -71,7 +72,7 @@ export default function EventScreen( props ) {
         <Text style={styles.text}>Contactar amb soport</Text>
       </TouchableOpacity>
     </View>
-    <View style={styles.containerOpcions}>
+    <View style={[styles.containerOpcions, { backgroundColor : Colors.llistat1 }]}>
       <View style={styles.containerIcona}>
         <Ionicons name="md-information-circle-outline" size={18} color="black" />
       </View>
@@ -87,7 +88,7 @@ export default function EventScreen( props ) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.fondo,
   },
   containerOpcions : {
     flexDirection : 'row', height: 60, padding: 10
@@ -116,12 +117,21 @@ EventScreen.navigationOptions = ({ navigation }) => {
   return {
     title: 'Opcions',
     headerStyle: {
-      backgroundColor: 'white',
+      backgroundColor: Colors.corporatiu,
     },
-    headerTintColor: 'black',
+    headerTintColor: Colors.titolsPantalles,
     headerTitleStyle: {
       fontWeight: 'bold',
       textTransform: 'uppercase'
     },
+    headerRight: (
+       <View style={{flexDirection: "row",justifyContent: "flex-end",paddingRight:10, width: 120}}>
+         <TouchableOpacity
+            onPress={() => navigation.openDrawer()}
+           >
+             <Ionicons name="md-menu" size={22} color={Colors.titolsPantalles} />
+         </TouchableOpacity>
+       </View>
+     )
   }
 };

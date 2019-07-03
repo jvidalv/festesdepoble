@@ -7,6 +7,7 @@ import {
   View,
   Image
 } from 'react-native';
+import Colors from '../constants/Colors';
 import NavigationService from '../components/NavigationService.js';
 import logo from '../assets/images/logo.png';
 
@@ -31,9 +32,11 @@ export default function AuthLoadingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ff7200'
+    backgroundColor: Colors.fondo,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   logo : {
-    resizeMode: 'contain', alignItems: 'flex-start',  width: '100%', marginBottom: 20
+    resizeMode: 'contain', alignItems: 'flex-start',  width: '90%', marginBottom: 20
   },
 });

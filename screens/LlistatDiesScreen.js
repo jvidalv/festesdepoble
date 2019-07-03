@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import NavigationService from '../components/NavigationService.js';
 import { MonoText } from '../components/StyledText';
 import RowDia  from '../components/RowDia';
+import Colors from '../constants/Colors';
 
 const dies = [
  {
@@ -104,13 +105,13 @@ const AnarAlDia = ( dia ) => {
   NavigationService.navigate('LlistatEvents', { dia });
 }
 
-export default function HomeScreen() {
+export default function LlistatDiesScreen() {
   return (
     <View style={styles.container}>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
-        {dies.map( dia => <RowDia key={dia.id} dia={dia} callback={() => AnarAlDia(dia)} />)}
+        {dies.map(( dia, index ) => <RowDia key={dia.id} index={index} dia={dia} callback={() => AnarAlDia(dia)} />)}
         <View style={styles.welcomeContainer}>
           <Image
             source={
@@ -162,25 +163,24 @@ export default function HomeScreen() {
   );
 }
 
-HomeScreen.navigationOptions = ({ navigation }) => {
-  // const { dia } = navigation.state.params;
+LlistatDiesScreen.navigationOptions = ({ navigation }) => {
+  //TODO CAMBIAR EL TITOL A DINAMIC DEPENENT DE LA FESTA
   return {
-    drawerLabel: 'Notifications',
     title: 'Festes majors 2019',
     headerStyle: {
-      backgroundColor: 'white',
+      backgroundColor: Colors.corporatiu,
     },
-    headerTintColor: 'black',
+    headerTintColor: Colors.titolsPantalles,
     headerTitleStyle: {
       fontWeight: 'bold',
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
     },
     headerRight: (
        <View style={{flexDirection: "row",justifyContent: "flex-end",paddingRight:10, width: 120}}>
          <TouchableOpacity
             onPress={() => navigation.openDrawer()}
            >
-             <Ionicons name="md-menu" size={22} color="black" />
+             <Ionicons name="md-menu" size={22} color={Colors.titolsPantalles} />
          </TouchableOpacity>
        </View>
      )

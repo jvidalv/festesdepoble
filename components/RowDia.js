@@ -7,11 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Colors from '../constants/Colors';
 
-export default function RowDia({ dia, callback }) {
+export default function RowDia(props) {
+  const {dia, index, callback} = props;
   return (
     <TouchableOpacity
-      style={[styles.Row, {backgroundColor: (dia.id % 2 ? 'white' : 'gray')}]}
+      style={[styles.Row, {backgroundColor: (index % 2 ? Colors.llistat1 : Colors.llistat2)}]}
       onPress={callback}
       delayPressIn={50}
       >
@@ -41,7 +43,7 @@ const styles = StyleSheet.create({
     backgroundColor:'blue', padding:20, flexDirection: 'row',
   },
   TextLeft:{
-    fontSize: 26, 
+    fontSize: 26,
     textTransform:'uppercase'
   },
   ContainerTextRight:{

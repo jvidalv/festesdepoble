@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import NavigationService from './NavigationService.js';
+import Colors from '../constants/Colors';
 
 export default function RowPoble({ poble }) {
 
@@ -23,7 +24,7 @@ export default function RowPoble({ poble }) {
 
   return (
     <TouchableOpacity
-      style={[styles.pobleContainer, { backgroundColor : (poble.id % 2 ? '#f8d2b4': '#f7bc8b' )}]}
+      style={[styles.pobleContainer, { backgroundColor : ( poble.id % 2 ? Colors.llistat1: Colors.llistat2 )}]}
       onPress={guardarPoble}
       delayPressIn={50}
       >
