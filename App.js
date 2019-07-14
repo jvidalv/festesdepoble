@@ -1,8 +1,8 @@
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
-import React, { useState } from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Platform, StatusBar, StyleSheet, View, AsyncStorage } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from './constants/Colors';
 import AppNavigator from './navigation/AppNavigator';
@@ -15,8 +15,11 @@ const AppContainer = createAppContainer(TopLevelNavigator);
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+  // carreguem poble si esta disponible
+  const [poble, setPoble] = useState(null);
+  useEffect( () => { AsyncStorage.getItem('poble').then((response) => setPoble(JSON.parse(response)))}, [])
 
-  if (!isLoadingComplete && !props.skipLoadingScreen) {
+  if (!isLoadingComplete && !props.skipLoadingScreen && poble === null) {
     return (
       <AppLoading
         startAsync={loadResourcesAsync}
@@ -28,7 +31,7 @@ export default function App(props) {
     return (
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator ref={navigatorRef => {
+        <AppNavigator screenProps={{poble : poble}} ref={navigatorRef => {
           NavigationService.setTopLevelNavigator(navigatorRef);
         }}
         />
@@ -40,8 +43,6 @@ export default function App(props) {
 async function loadResourcesAsync() {
   await Promise.all([
     Asset.loadAsync([
-      require('./assets/images/robot-dev.png'),
-      require('./assets/images/robot-prod.png'),
       require('./assets/images/mobile-logo.png'),
       require('./assets/images/logo.png'),
     ]),
@@ -54,6 +55,11 @@ async function loadResourcesAsync() {
       // 'playfair-bold': require('./assets/fonts/PlayfairDisplay-Bold.ttf'),
       'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       'newrotic': require('./assets/fonts/Newrotic.ttf'),
+      'mon-regular': require('./assets/fonts/Montserrat-Regular.ttf'),
+      'mon-bold': require('./assets/fonts/Montserrat-Bold.ttf'),
+      'mon-black': require('./assets/fonts/Montserrat-Black.ttf'),
+      'mon-medium': require('./assets/fonts/Montserrat-Medium.ttf'),
+      'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
     }),
   ]);
 }

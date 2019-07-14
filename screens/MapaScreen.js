@@ -8,194 +8,146 @@ import {
   TouchableOpacity,
   View,
   ActivityIndicator,
+  AsyncStorage
 } from 'react-native';
 import MapView from 'react-native-maps';
+import { Ionicons } from '@expo/vector-icons';
 import RowFiltre from '../components/RowFiltre';
 import NavigationService from '../components/NavigationService';
+import ErrorConnexio  from '../components/ErrorConnexio';
+import { useFetch } from "../helpers/Hooks";
 import { useDemanarLocalitzacio } from '../helpers/PermisosLocalitzacio';
 import Colors from '../constants/Colors';
-import { Ionicons } from '@expo/vector-icons';
+import Urls from '../constants/Urls';
+import { usePoble } from "../helpers/Storage";
 
-export default function MapViewModal(props) {
+export default function MapaScreen(props) {
+  const [loadingPoble, poble] = usePoble();
+  const [data, loading, setLoading] = useFetch(Urls.festivitat + poble.id, { nom : 'events'});
 
-  // demanar Permisos
-  const [demanarPermisos, localitzacioActual, localitzacioPermisos, mapRegion] = useDemanarLocalitzacio()
-  useEffect(() => { demanarPermisos() }, [])
+  useEffect(() => {
+    setDiesSeleccionats(data.dies)
+  }, [data])
 
-  //gestionem filtres
   const [filtreDies, setFiltreDies] = useState(false);
-  const [filtreEstats, setFiltreEstats] = useState(false);
-  const [diesSeleccionats, setDiesSeleccionats] = useState(dies)
-  const [estatsSeleccionats, setEstatsSeleccionats] = useState(estats)
-
-  const estaSeleccionat = (sel, llistat) => {
-    return llistat.findIndex((aSel) => aSel.id === sel.id ) != -1
-  }
-
-  const gestionarSeleccionats = (sel, llistat) => {
-    const selections = [...llistat];
-    if(estaSeleccionat(sel, selections)){
-      return selections.filter((aSel) => aSel.id !== sel.id)
-    } else {
-      selections.push(sel)
-      return selections;
-    }
-  }
-  // console.log(estatsSeleccionats)
-  //gestionem modal visible
+  const [diesSeleccionats, setDiesSeleccionats] = useState([])
   const [infoMarker, setInfoMarker] = useState({event: false, visible: false});
 
   return (
       <View style={styles.container}>
-        {
-          localitzacioActual === null ?
-          <View style={styles.viewEstat}>
-            <Text style={styles.textEstat}>Buscant la teva situació actual...</Text>
-            <ActivityIndicator size="large" color="white" />
-          </View> :
-          localitzacioPermisos === false ?
-            <View style={styles.viewEstat}>
-              <Text style={styles.textEstat}>Permisos de localització denegats.</Text>
-            </View> :
-            mapRegion === null ?
-            <View style={styles.viewEstat}>
-              <Text style={styles.textEstat}>No es possible localitzar la teva posició</Text>
-            </View> :
-            <View style={{flex: 1}}>
-              <MapView
-                toolbarEnabled={false}
-                loadingEnabled={true}
-                mapType="hybrid"
-                style={{flex: 1, width: '100%', height: 250}}
-                initialRegion={mapRegion}
-                showsUserLocation={true}
-                showsMyLocationButton={true}
-                onPress={() => setInfoMarker({visible : false, nom: false})}
-              >
-                <MapView.Marker
-                  touchable={true}
-                  coordinate={mapRegion}
-                  onPress={() => setInfoMarker({visible : !infoMarker.visible, nom: 'hola'})}
-                />
-              </MapView>
-              <View
-                style={styles.filterContainer}
-                >
-                <View style={{flexDirection: 'row'}}>
-                    <TouchableOpacity
-                       style={styles.filterText}
-                       onPress={() => setFiltreEstats(!filtreEstats)}>
-                      <Text style={{fontSize: 18, color: Colors.titolsPantalles}}>Filtrar per estat</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.filterIcon}
-                      onPress={() => setFiltreEstats(!filtreEstats)}>
-                      <Ionicons name={filtreEstats ? "md-remove" : "md-add"} size={18} color={Colors.titolsPantalles} />
-                    </TouchableOpacity>
-                </View>
-                { filtreEstats ?
-                  estats.map((estat) => (
-                    <RowFiltre
-                      key={estat.id}
-                      nom={estat.nom}
-                      item={estat}
-                      items={estats}
-                      seleccionat={estaSeleccionat( estat, estatsSeleccionats )}
-                      seleccionats={estatsSeleccionats}
-                      setSeleccionats={setEstatsSeleccionats}
-                      gestionarSeleccionats={gestionarSeleccionats} />
-                  ))
-                  : null
-                }
-                <View style={{flexDirection: 'row', marginTop: 5}}>
-                  <TouchableOpacity
-                     style={styles.filterText}
-                     onPress={() => setFiltreDies(!filtreDies)}>
-                    <Text style={{fontSize: 18, color: Colors.titolsPantalles}}>Filtrar per dies</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.filterIcon}
-                    onPress={() => setFiltreDies(!filtreDies)}>
-                    <Ionicons name={filtreDies ? "md-remove" : "md-add"} size={18} color={Colors.titolsPantalles} />
-                  </TouchableOpacity>
-                </View>
-                { filtreDies ?
-                  dies.map((dia) => (
-                    <RowFiltre
-                      key={dia.id}
-                      nom={dia.nomDia}
-                      item={dia}
-                      items={dies}
-                      seleccionat={estaSeleccionat( dia, diesSeleccionats )}
-                      seleccionats={diesSeleccionats}
-                      setSeleccionats={setDiesSeleccionats}
-                      gestionarSeleccionats={gestionarSeleccionats} />
-                  ))
-                  : null
-                }
-              </View>
-              { infoMarker.visible ? <View style={{position: 'absolute', bottom: 10, padding: 10, left: 10, right: 10, flex: 1,  backgroundColor: Colors.titolsPantalles + 'CC' }}>
-                  <Text style={styles.title}>Espectacular a lhort de ca la tieta</Text>
-                  <Text>
-                    Al Ajuntament
-                  </Text>
-                  <Text>
-                    De les 08:00 a les 12:00
-                  </Text>
-                  <View style={{marginTop: 10}}>
-                    <Text style={styles.textBold}>
-                      Més informació:
-                    </Text>
-                    <Text>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </Text>
-                  </View>
-                </View>
-                : null
-              }
+        { data.dies && data.dies.length ? <MapView
+          toolbarEnabled={false}
+          loadingEnabled={true}
+          style={{flex: 1}}
+          initialRegion={{ latitude: poble.latitude, longitude: poble.longitude, latitudeDelta: 0.0022, longitudeDelta: 0.0121 }}
+          onPress={() => setInfoMarker({visible : false, event: false})}
+        >
+          { data.dies.map((dia, index) => {
+            return estaSeleccionat(dia, diesSeleccionats ? diesSeleccionats : []) ?
+              dia.events.map((event) => <MapView.Marker
+                key={event.id}
+                pinColor={colors[index]}
+                touchable={true}
+                coordinate={{ latitude: event.latitude, longitude: event.longitude, latitudeDelta: 0.0022, longitudeDelta: 0.0121 }}
+                onPress={() => setInfoMarker({visible : true, event: event})}/>)
+              : null
+          })}
+        </MapView> : data === false && !loading ? <ErrorConnexio callback={setLoading.bind(this)}/>
+          : <View style={styles.Loader}>
+              <ActivityIndicator color="black" size="large"/>
             </View>
         }
-      </View>
+        <View
+          style={styles.filterContainer}
+          >
+          { data.dies && data.dies.length ? <View style={{flexDirection: 'row', marginTop: 5}}>
+            <TouchableOpacity
+               style={styles.filterText}
+               onPress={() => setFiltreDies(!filtreDies)}>
+              <Text style={{fontSize: 18, color: Colors.titolsPantalles}}>Filtrar per dia</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.filterIcon}
+              onPress={() => setFiltreDies(!filtreDies)}>
+              <Ionicons name={filtreDies ? "md-remove" : "md-add"} size={18} color={Colors.titolsPantalles} />
+            </TouchableOpacity>
+          </View> : null }
+          { filtreDies && data.dies && data.dies.length?
+              data.dies.map((dia, index, dies) => (
+                <RowFiltre
+                  bgcolor={colors[index]}
+                  key={dia.id}
+                  nom={dia.nom_especial ? dia.nom_especial : dia.noms.nom}
+                  item={dia}
+                  items={dies}
+                  seleccionat={estaSeleccionat( dia, diesSeleccionats )}
+                  seleccionats={diesSeleccionats}
+                  setSeleccionats={setDiesSeleccionats}
+                  gestionarSeleccionats={gestionarSeleccionats} />
+              ))
+              : null
+          }
+          </View>
+          { infoMarker.visible ? <ScrollView style={styles.infoMarkerContent}>
+              <View style={[styles.contentContainer]}>
+                <Text style={[styles.title, {color: Colors.roigos}]}>{infoMarker.event.nom}</Text>
+              </View>
+              <View style={[styles.contentContainer]}>
+                <Text style={styles.titleContent}>Localització</Text>
+                <Text style={styles.textContent}>
+                  {infoMarker.event.localitzacio}
+                </Text>
+              </View>
+              <View style={[styles.contentContainer]}>
+                <Text style={styles.titleContent}>Horaris</Text>
+                <Text style={styles.textContent}>
+                  {infoMarker.event.dia_inici} a les {infoMarker.event.hora_inici}{infoMarker.event.hora_fi ? ' fins les ' + infoMarker.event.hora_fi : ''}
+                </Text>
+              </View>
+              <View style={[styles.contentContainer]}>
+                <Text style={styles.titleContent}>Més informació</Text>
+                <Text style={styles.textContent}>{infoMarker.event.descripcio}</Text>
+              </View>
+              <View style={[styles.contentContainer]}>
+                <Text style={styles.titleContent}>Organitzador</Text>
+                <Text style={styles.textContent}>{infoMarker.event.organitzador}</Text>
+              </View>
+            </ScrollView>
+            : null }
+            { infoMarker.visible ? <ScrollView style={styles.infoMarkerContent}>
+                <View style={[styles.contentContainer]}>
+                  <Text style={[styles.title, {color: Colors.roigos}]}>{infoMarker.event.nom}</Text>
+                </View>
+                <View style={[styles.contentContainer]}>
+                  <Text style={styles.titleContent}>Localització</Text>
+                  <Text style={styles.textContent}>
+                    {infoMarker.event.localitzacio}
+                  </Text>
+                </View>
+                <View style={[styles.contentContainer]}>
+                  <Text style={styles.titleContent}>Horaris</Text>
+                  <Text style={styles.textContent}>
+                    {infoMarker.event.dia_inici} a les {infoMarker.event.hora_inici}{infoMarker.event.hora_fi ? ' fins les ' + infoMarker.event.hora_fi : ''}
+                  </Text>
+                </View>
+                <View style={[styles.contentContainer]}>
+                  <Text style={styles.titleContent}>Més informació</Text>
+                  <Text style={styles.textContent}>{infoMarker.event.descripcio}</Text>
+                </View>
+                <View style={[styles.contentContainer]}>
+                  <Text style={styles.titleContent}>Organitzador</Text>
+                  <Text style={styles.textContent}>{infoMarker.event.organitzador}</Text>
+                </View>
+              </ScrollView>
+              : null }
+        </View>
     )
 }
 
-const dies = [
-  {
-    id: 1,
-    nomDia : 'Dies',
-    dataDia : 'previs'
-  },
-  {
-    id: 2,
-    nomDia : 'Dies',
-    dataDia : 'previs'
-  },
-  {
-    id: 3,
-    nomDia : 'Dies',
-    dataDia : 'previs'
-  }
-]
-
-const estats = [
-  {
-    id: 1,
-    nom : 'Finalitzat...',
-  },
-  {
-    id: 2,
-    nom : 'En martxa!',
-  },
-  {
-    id: 3,
-    nom: 'Proximament!!',
-  }
-]
-
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1, backgroundColor : Colors.fondo
+    flex: 1,
+    backgroundColor : '#f2f1f0'
   },
   viewEstat : {
     flex: 1, justifyContent: 'center', alignItems: 'center'
@@ -210,33 +162,73 @@ const styles = StyleSheet.create({
   },
   filterText: {
     flexDirection: 'row',
-    backgroundColor: Colors.corporatiu + 'BF',
-    paddingHorizontal:5,
-    justifyContent:'center', alignItems: 'center'
+    backgroundColor: Colors.corporatiu,
+    paddingHorizontal: 5,
+    fontFamily: 'open-sans',
+    justifyContent:'center',
+    alignItems: 'center',
   },
   filterIcon: {
-    backgroundColor: Colors.corporatiu + 'BF',
+    backgroundColor: Colors.corporatiu,
     marginLeft: 5,
     paddingHorizontal:5,
     justifyContent:'center', alignItems: 'center',
     minWidth: 24,
-  },
-  title : {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  subtitle : {
-    fontSize: 16,
+    borderRadius: 30
   },
   textBold : {
     fontWeight: 'bold'
+  },
+  contentContainer : {
+    padding: 10,
+    paddingVertical : 5,
+  },
+  title : {
+    fontSize: 16,
+    fontFamily: 'mon-bold',
+  },
+  titleContent : {
+    marginBottom: 3,
+    fontFamily : 'mon-bold'
+  },
+  textContent : {
+    fontFamily: 'open-sans',
+    fontSize: 14,
+  },
+  infoMarkerContent : {
+    position: 'absolute',
+    flex: 1,
+    padding: 5,
+    bottom: 10,
+    left: 10,
+    right: 10,
+    backgroundColor: Colors.titolsPantalles + 'CC'
+  },
+  Loader : {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 
 });
 
+const estaSeleccionat = (sel, llistat) => {
+  return llistat.findIndex((aSel) => aSel.id === sel.id ) != -1
+}
 
-MapViewModal.navigationOptions = ({ navigation }) => {
+const gestionarSeleccionats = (sel, llistat) => {
+  const selections = [...llistat];
+  if(estaSeleccionat(sel, selections)){
+    return selections.filter((aSel) => aSel.id !== sel.id)
+  } else {
+    selections.push(sel)
+    return selections;
+  }
+}
+
+const colors = ['violet', 'green', 'blue', 'gold', 'red', 'indigo', 'orange', 'tan', 'linen',  'blue', 'yellow', 'teal',  'tomato']
+
+MapaScreen.navigationOptions = ({ navigation }) => {
   return {
     title: 'Mapa',
     headerStyle: {

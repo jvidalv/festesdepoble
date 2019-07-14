@@ -11,12 +11,15 @@ import Colors from '../constants/Colors';
 import NavigationService from '../components/NavigationService.js';
 import logo from '../assets/images/logo.png';
 
-export default function AuthLoadingScreen() {
-
+export default function AuthLoadingScreen(props) {
   useEffect( () => {
     const _bootstrapAsync = async () => {
-      const pobleToken = await AsyncStorage.getItem('poble');
-      NavigationService.navigate(pobleToken ? 'App' : 'Selector');
+      const poble = await AsyncStorage.getItem('poble');
+      if (poble) {
+        NavigationService.navigate('LlistatDies', { poble : JSON.parse(poble)});
+      } else {
+        NavigationService.navigate('Selector');
+      }
     };
     _bootstrapAsync()
   }, [])

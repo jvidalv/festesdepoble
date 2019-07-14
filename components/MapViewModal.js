@@ -1,47 +1,39 @@
 import React, {useState, useEffect} from 'react';
 import {
-  Image,
-  Platform,
-  ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
+  ActivityIndicator
 } from 'react-native';
 import MapView from 'react-native-maps';
 import { useDemanarLocalitzacio } from '../helpers/PermisosLocalitzacio';
 
-export default function MapaScreen() {
-
-  // demanar Permisos
-  const [demanarPermisos, localitzacioActual, localitzacioPermisos, mapRegion] = useDemanarLocalitzacio()
-  useEffect(() => { demanarPermisos() }, [])
+export default function MapaScreen(props) {
+  const { event } = props
 
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.container}>
       {
-        localitzacioActual === null ?
-        <View>
-          <Text>Buscant la teva situació actual...</Text>
-        </View> :
-          localitzacioPermisos === false ?
-          <View><Text>Permisos de localització denegats.</Text></View> :
-            mapRegion === null ?
-            <View><Text>No es possible localitzar la teva posició</Text></View> :
-            <MapView
-              toolbarEnabled={false}
-              loadingEnabled={true}
-              mapType="hybrid"
-              style={{flex: 1, width: '100%', height: 250}}
-              initialRegion={mapRegion}
-              showsUserLocation={true}
-              showsMyLocationButton={true}
-            >
-              <MapView.Marker
-                coordinate={mapRegion}
-              />
-            </MapView>
+        <MapView
+          toolbarEnabled={false}
+          loadingEnabled={true}
+          style={styles.mapView}
+          initialRegion={{ latitude: event.latitude, longitude: event.longitude, latitudeDelta: 0.0022, longitudeDelta: 0.0121 }}
+        >
+          <MapView.Marker
+            coordinate={{ latitude: event.latitude, longitude: event.longitude, latitudeDelta: 0.0022, longitudeDelta: 0.0121 }}
+          />
+        </MapView>
       }
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1, height: 200, marginTop: 5, justifyContent: 'center', overflow:'hidden', alignItems: 'center', backgroundColor: '#f2f1f0', borderRadius: 10
+  },
+  mapView : {
+    flex: 1, width: '100%', height: 200, backgroundColor: '#9d8b79', borderRadius: 10
+  }
+});

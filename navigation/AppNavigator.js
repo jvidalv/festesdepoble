@@ -1,13 +1,13 @@
 import React from 'react';
 import { createAppContainer, createSwitchNavigator, createStackNavigator } from 'react-navigation';
 import MainTabNavigator from './MainTabNavigator';
-import SelectionScreen from '../screens/SelectionScreen';
+import SelectorPoblesScreen from '../screens/SelectorPoblesScreen';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 import ContactarScreen from '../screens/ContactarScreen';
 
 const SelectionStack = createStackNavigator(
   {
-    Selection : SelectionScreen,
+    SelectorPobles : SelectorPoblesScreen,
     Contactar : ContactarScreen,
   },
   {

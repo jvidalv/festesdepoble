@@ -6,12 +6,11 @@ import TabBarIcon from '../components/TabBarIcon';
 import { CustomMenu } from '../components/CustomMenu';
 import Colors from '../constants/Colors';
 
-import SelectionScreen from '../screens/SelectionScreen';
+import SelectorPoblesScreen from '../screens/SelectorPoblesScreen';
 import ContactarScreen from '../screens/ContactarScreen';
 import LlistatDiesScreen from '../screens/LlistatDiesScreen';
 import LlistatEventsScreen from '../screens/LlistatEventsScreen';
 import EventScreen from '../screens/EventScreen';
-import OpcionsScreen from '../screens/OpcionsScreen';
 import MapaScreen from '../screens/MapaScreen';
 
 const config = Platform.select({
@@ -24,7 +23,6 @@ const LlistatStack = createStackNavigator(
     LlistatDies: LlistatDiesScreen,
     LlistatEvents: LlistatEventsScreen,
     Event: EventScreen,
-    Opcions : OpcionsScreen,
   },
   config
 );
@@ -62,34 +60,14 @@ MapaStack.navigationOptions = {
 
 MapaStack.path = '';
 
-const OpcionsStack = createStackNavigator(
+const SelectorPoblesStack = createStackNavigator(
   {
-    Opcions: OpcionsScreen,
+    SelectorPobles: SelectorPoblesScreen,
   },
   config
 );
 
-OpcionsStack.navigationOptions = {
-  drawerLabel : 'Opcions',
-  activeTintColor : Colors.titolsPantalles,
-  drawerIcon : ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name="md-settings"
-    />
-  ),
-};
-
-OpcionsStack.path = '';
-
-const SelectionStack = createStackNavigator(
-  {
-    Selection: SelectionScreen,
-  },
-  config
-);
-
-SelectionStack.navigationOptions = {
+SelectorPoblesStack.navigationOptions = {
   drawerLabel : 'Canviar de poble',
   activeTintColor : Colors.titolsPantalles,
   drawerIcon : ({ focused }) => (
@@ -100,7 +78,7 @@ SelectionStack.navigationOptions = {
   ),
 };
 
-SelectionStack.path = '';
+SelectorPoblesStack.path = '';
 
 const ContactarStack = createStackNavigator(
   {
@@ -125,9 +103,8 @@ ContactarStack.path = '';
 const tabNavigator = createDrawerNavigator({
       LlistatStack,
       MapaStack,
-      SelectionStack,
+      SelectorPoblesStack,
       ContactarStack,
-      OpcionsStack,
     },
     {
       contentComponent: props => CustomMenu(props),

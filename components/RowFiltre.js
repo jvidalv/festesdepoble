@@ -9,28 +9,19 @@ import {
 import Colors from '../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 
-// TODO : FICAR ELS ESTILS ABAIX CORRECTAMENT
-// TODO : Explicar que espere la funcio i que retorne
 export default function RowFiltre( props ) {
-  const { item, items, nom, seleccionat, seleccionats, gestionarSeleccionats, setSeleccionats } = props
+  const { item, items, nom, seleccionat, seleccionats, gestionarSeleccionats, setSeleccionats, bgcolor } = props
   return (
-    <View style={{flexDirection: 'row', marginTop: 5, alignSelf: 'flex-end'}}>
+    <View style={[styles.Row, { opacity: (seleccionat ? 1 : 0.6) }]}>
       <TouchableOpacity
-        style={{backgroundColor: ( seleccionat ? Colors.llistat1 : Colors.llistat2) + 'CC'}}
+        style={{backgroundColor: bgcolor}}
         key={item.id}
-        onPress={() => setSeleccionats( gestionarSeleccionats( item, seleccionats )) }
-      >
-          <Text style={{fontSize: 18, color: Colors.titolsPantalles}}> {nom} </Text>
+        onPress={() => setSeleccionats( gestionarSeleccionats( item, seleccionats ))}>
+          <Text style={styles.Text}> {nom} </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={{
-          minWidth: 24,
-          backgroundColor: ( seleccionat ? Colors.llistat1 : Colors.llistat2) + 'CC',
-          marginLeft: 5,
-          paddingHorizontal:5,
-          justifyContent:'center', alignItems: 'center'}}
-        onPress={ () => setSeleccionats( gestionarSeleccionats( item, seleccionats ))}
-        >
+        style={[styles.Icon, {backgroundColor: bgcolor}]}
+        onPress={ () => setSeleccionats( gestionarSeleccionats( item, seleccionats ))}>
         <Ionicons name={ seleccionat ? "md-eye" : "md-eye-off"} size={18} color={Colors.titolsPantalles} />
       </TouchableOpacity>
     </View>
@@ -39,22 +30,17 @@ export default function RowFiltre( props ) {
 
 const styles = StyleSheet.create({
   Row:{
-    minHeight:120,
-    backgroundColor:'blue', padding:20, flexDirection: 'row',
+    flexDirection: 'row', marginTop: 5, alignSelf: 'flex-end'
   },
-  TextLeft:{
-    fontSize: 26,
-    textTransform:'uppercase'
+  Text:{
+    fontSize: 18, color: Colors.titolsPantalles
   },
-  ContainerTextRight:{
-    marginLeft: 'auto', justifyContent:'center'
+  Icon:{
+    minWidth: 24,
+    marginLeft: 5,
+    paddingHorizontal:5,
+    justifyContent:'center',
+    alignItems: 'center',
+    borderRadius: 30,
   },
-  TextRightTop:{
-    fontSize: 12,
-  },
-  TextRightBottom:{
-    fontSize: 16,
-    textTransform:'uppercase',
-    textAlign:'right'
-  }
 });

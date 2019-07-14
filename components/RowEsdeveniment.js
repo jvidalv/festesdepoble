@@ -18,25 +18,26 @@ export default function RowEsdeveniment(props) {
       onPress={callback}
       delayPressIn={50}
       >
-      <View style={styles.ContainerLeft}>
-        <Text style={styles.TextLeft}>
-          {event.dia}
+      <View style={[styles.ContainerLeft, { width: event.es_dia_normal ? '12%' : '20%'}]}>
+        <Text numberOfLines={1} style={[styles.TextLeft, styles.TextTop]}>
+          {!event.es_dia_normal ? event.dia_inici : event.hora_inici}
         </Text>
-        <Text style={styles.TextLeft}>
-          {event.horaInici}
-        </Text>
+        { !event.es_dia_normal ? <Text style={styles.TextLeft}>
+          {event.hora_inici}
+        </Text> : null}
       </View>
       <View style={styles.ContainerTextRight}>
         <Text style={styles.TextRightTop}>
           {event.nom}
         </Text>
-        <Text style={styles.TextRightBottom}>
-          {/* <Ionicons name="md-pin" size={12} color="black" /> */}
-          {event.localitzacio}
-        </Text>
+        <View style={{flexDirection: 'row', alingItems : 'center'}}>
+          <Text style={styles.TextRightBottom}>
+            {event.localitzacio}
+          </Text>
+        </View>
       </View>
       <View style={styles.ContainerRight}>
-        <Ionicons name="md-arrow-dropright-circle" size={20} color="black" />
+        <Ionicons name="md-arrow-forward" size={20} color="black" />
       </View>
     </TouchableOpacity>
   )
@@ -44,34 +45,42 @@ export default function RowEsdeveniment(props) {
 
 const styles = StyleSheet.create({
   Row:{
-    backgroundColor:'blue',
-    paddingRight:10,
-    paddingTop:10,
-    paddingBottom:10,
+    padding: 10,
+    minHeight: 70,
     flexDirection: 'row',
   },
   ContainerLeft:{
     alignItems: 'flex-end',
-    width: '20%',
+    justifyContent: 'center',
+    width: '20%'
   },
   ContainerRight:{
     alignItems: 'center',
     justifyContent: 'center',
-    width: '10%',
+    width: '6%',
   },
   TextLeft:{
     fontSize: 12,
+    fontFamily: 'open-sans',
     textTransform:'uppercase'
+  },
+  TextTop:{
+    fontFamily: 'open-sans',
+    color: Colors.roigos,
+    fontWeight: 'bold'
   },
   ContainerTextRight:{
     marginLeft: 10,
+    justifyContent: 'center',
     flex: 1,
   },
   TextRightTop:{
-    fontSize: 12,
+    fontSize: 14,
+    fontFamily: 'open-sans',
     fontWeight: 'bold'
   },
   TextRightBottom:{
     fontSize: 12,
+    fontFamily: 'open-sans',
   }
 });
