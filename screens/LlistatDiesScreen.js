@@ -15,8 +15,9 @@ import RowDia  from '../components/RowDia';
 import ErrorConnexio  from '../components/ErrorConnexio';
 import Colors from '../constants/Colors';
 import Urls from '../constants/Urls';
-import { useFetch } from "../helpers/Hooks";
+import { useFetchPoble } from "../helpers/Hooks";
 import { usePoble } from "../helpers/Storage";
+import { useDesconectar } from "../helpers/Desconectar";
 
 // array tonta per a carregar rows quan no hi han dades
 const arrayLoader = [0,1,2,3,4,5,6]
@@ -25,16 +26,18 @@ const AnarAlDia = ( dia ) => {
   NavigationService.navigate('LlistatEvents', { dia });
 }
 
-export default function LlistatDiesScreen(props) {
-  const [loadingPoble, poble] = usePoble();
-  const [data, loading, setLoading] = useFetch(Urls.festivitat + poble.id, { nom : 'events'});
+export default function LlistatDiesScreen(props)
+{
+  const [loadingPoble, poble] = usePoble(props);
+  const [data, loading, setLoading] = useFetchPoble(poble);
+  useDesconectar(loading, data);
 
   return (
     <View style={styles.container}>
       <ScrollView
-        style={[styles.container, data.dies ? { backgroundColor : data.dies.length % 2 ? Colors.llistat1 : Colors.llistat2} : null]}
+        style={[styles.container, data !== null && data.dies ? { backgroundColor : data.dies.length % 2 ? Colors.llistat1 : Colors.llistat2} : null]}
         contentContainerStyle={styles.contentContainer}>
-        { data.dies && data.dies.length ?
+        { data !== null && data.dies && data.dies.length ?
           data.dies.map(( dia, index ) => <RowDia key={dia.id} index={index} dia={dia} callback={() => AnarAlDia(dia)} />)
           : data === false && !loading ? <ErrorConnexio callback={setLoading.bind(this)}/> : arrayLoader.map((dia, index) => <RowDia key={dia} index={index}  />)
         }
@@ -60,6 +63,7 @@ LlistatDiesScreen.navigationOptions = ( props ) => {
   const { poble } = props.navigation.state.params;
   return {
     title: poble.festivitat.nom,
+    headerBackTitle: 'Dies',
     headerStyle: {
       backgroundColor: Colors.corporatiu,
     },

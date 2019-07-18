@@ -19,7 +19,7 @@ import { Ionicons } from '@expo/vector-icons';
 import logo from '../assets/images/logo.png';
 
 const AnarAContacta = ( ) => {
-  NavigationService.navigate('Contactar');
+  NavigationService.navigate('Contactar', { visibilitat : 0 });
 }
 
 export default function SelectorPoblesScreen( props ) {
@@ -28,7 +28,7 @@ export default function SelectorPoblesScreen( props ) {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.contentContainer}>
-          <Image source={logo}  style={styles.logo}/>
+          <Image source={logo} style={styles.logo}/>
           { data.length ? <View>
             <Text style={styles.textSeleccio}> Selecciona una població: </Text>
             { data.map(( poble, index ) => (
@@ -46,7 +46,7 @@ export default function SelectorPoblesScreen( props ) {
         onPress={AnarAContacta}
         style={styles.footer}>
         <Text style={styles.textFooter}>
-          Trobes a faltar el teu poble o tens alguna suggerència?
+          Trobes a faltar el teu poble?
         </Text>
       </TouchableOpacity>
     </View>

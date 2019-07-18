@@ -30,7 +30,7 @@ export default function App(props) {
   } else {
     return (
       <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+        {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
         <AppNavigator screenProps={{poble : poble}} ref={navigatorRef => {
           NavigationService.setTopLevelNavigator(navigatorRef);
         }}
@@ -43,8 +43,8 @@ export default function App(props) {
 async function loadResourcesAsync() {
   await Promise.all([
     Asset.loadAsync([
-      require('./assets/images/mobile-logo.png'),
       require('./assets/images/logo.png'),
+      require('./assets/images/fempoble.png'),
     ]),
     Font.loadAsync({
       // This is the font that we are using for our tab bar

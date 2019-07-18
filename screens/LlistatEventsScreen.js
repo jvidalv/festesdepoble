@@ -18,7 +18,7 @@ const AnarAlEvent = ( event ) => {
 }
 
 const AnarAContacta = ( ) => {
-  NavigationService.navigate('Contactar');
+  NavigationService.navigate('Contactar', { visibilitat : 1 });
 }
 
 
@@ -71,6 +71,7 @@ LlistatEventsScreen.navigationOptions = ({navigation}) => {
     headerStyle: {
       backgroundColor: Colors.corporatiu,
     },
+    headerBackTitle: 'Events',
     headerTintColor: Colors.titolsPantalles,
     headerTitleStyle: {
       fontWeight: 'bold',

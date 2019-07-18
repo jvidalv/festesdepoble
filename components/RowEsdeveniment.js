@@ -18,7 +18,7 @@ export default function RowEsdeveniment(props) {
       onPress={callback}
       delayPressIn={50}
       >
-      <View style={[styles.ContainerLeft, { width: event.es_dia_normal ? '12%' : '20%'}]}>
+      <View style={[styles.ContainerLeft, event.es_dia_normal ? { width:  '12%', justifyContent: 'center', alignItems: 'center'} : {width: '20%' }]}>
         <Text numberOfLines={1} style={[styles.TextLeft, styles.TextTop]}>
           {!event.es_dia_normal ? event.dia_inici : event.hora_inici}
         </Text>

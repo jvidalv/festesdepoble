@@ -15,15 +15,15 @@ import { Ionicons } from '@expo/vector-icons';
 import RowFiltre from '../components/RowFiltre';
 import NavigationService from '../components/NavigationService';
 import ErrorConnexio  from '../components/ErrorConnexio';
-import { useFetch } from "../helpers/Hooks";
+import { useFetchPoble } from "../helpers/Hooks";
+import { usePoble } from "../helpers/Storage";
 import { useDemanarLocalitzacio } from '../helpers/PermisosLocalitzacio';
 import Colors from '../constants/Colors';
 import Urls from '../constants/Urls';
-import { usePoble } from "../helpers/Storage";
 
 export default function MapaScreen(props) {
   const [loadingPoble, poble] = usePoble();
-  const [data, loading, setLoading] = useFetch(Urls.festivitat + poble.id, { nom : 'events'});
+  const [data, loading, setLoading] = useFetchPoble(poble);
 
   useEffect(() => {
     setDiesSeleccionats(data.dies)

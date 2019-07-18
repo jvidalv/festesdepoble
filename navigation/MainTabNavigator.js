@@ -82,7 +82,7 @@ SelectorPoblesStack.path = '';
 
 const ContactarStack = createStackNavigator(
   {
-    Contactar: ContactarScreen,
+    Contactar: { screen : ContactarScreen, params : { visibilitat : 1 } }
   },
   config
 );
@@ -103,8 +103,8 @@ ContactarStack.path = '';
 const tabNavigator = createDrawerNavigator({
       LlistatStack,
       MapaStack,
-      SelectorPoblesStack,
       ContactarStack,
+      SelectorPoblesStack,
     },
     {
       contentComponent: props => CustomMenu(props),

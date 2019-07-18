@@ -17,7 +17,7 @@ export default function RowPoble({poble, index}) {
   const guardarPoble = () => {
     const guardar = async () => {
       await AsyncStorage.setItem('poble', JSON.stringify(poble))
-      NavigationService.navigate('AuthLoading');
+      NavigationService.navigate('AuthLoading', { poble : poble } );
     }
     guardar()
   }
@@ -25,7 +25,7 @@ export default function RowPoble({poble, index}) {
   return (
     <TouchableOpacity
       style={[styles.pobleContainer, { backgroundColor : ( index % 2 ? Colors.llistat1: Colors.llistat2 )}]}
-      onPress={guardarPoble}
+      onPress={poble.festivitat.id !== false ? guardarPoble : () => false}
       delayPressIn={50}
       >
       <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Escut_de_Vilalba_dels_Arcs.svg/208px-Escut_de_Vilalba_dels_Arcs.svg.png'}}  style={styles.pobleImatge}/>
@@ -37,9 +37,9 @@ export default function RowPoble({poble, index}) {
           {poble.festivitat.informacio}
         </Text>
       </View>
-      <View style={styles.pobleIconaDreta}>
+      { poble.festivitat.id !== false ? <View style={styles.pobleIconaDreta}>
         <Ionicons name="md-arrow-forward" size={24} color="black" />
-      </View>
+      </View> : null }
     </TouchableOpacity>
   )
 }

@@ -8,22 +8,38 @@ import {
   TouchableOpacity,
   TextInput,
   View,
-  ActivityIndicator
+  ActivityIndicator,
+  KeyboardAvoidingView
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import * as WebBrowser from 'expo-web-browser';
 import { Ionicons } from '@expo/vector-icons';
 import Urls from '../constants/Urls';
-
+import { usePoble } from "../helpers/Storage";
 import Colors from '../constants/Colors';
 import NavigationService from '../components/NavigationService.js';
 import RowEsdeveniment  from '../components/RowEsdeveniment';
+import logo from '../assets/images/fempoble.png';
 
-function enviarFormulari(setLoading, setResponse, nom, telefon, email, missatge){
+function enviarFormulari(setLoading, setResponse, nom, telefon, email, missatge, visibilitat, pobleid)
+{
   setLoading(true)
   const fetchFormulari = async () => {
     const response = await fetch(Urls.contactar, {
         method: 'POST',
-        body: `nom=${nom}&telefon=${telefon}&email=${email}&missatge=${missatge}&origen=festesdepoble`
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          nom: nom,
+          telefon: telefon,
+          email : email,
+          missatge : missatge,
+          origen : 0,
+          visibilitat : visibilitat,
+          poble_id : pobleid
+        })
       }
     ).then((response) => response.ok ? true : false)
     setResponse(response)
@@ -32,7 +48,11 @@ function enviarFormulari(setLoading, setResponse, nom, telefon, email, missatge)
   fetchFormulari()
 }
 
-export default function ContactarScreen( props ) {
+export default function ContactarScreen( props )
+{
+  const visibilitat = props.navigation.getParam('visibilitat');
+  const [loadingPoble, poble] = usePoble();
+  const [errorEmail, setErrorEmail] = useState(false)
   const [nom, setNom] = useState("")
   const [telefon, setTelefon] = useState("")
   const [email, setEmail] = useState("")
@@ -42,24 +62,37 @@ export default function ContactarScreen( props ) {
   const [response, setResponse] = useState(null)
 
   useEffect(() => {
-    setVisibilitatBoto(nom !== "" && telefon !== "" && email !== "" && missatge !== "" );
-  }, [nom, telefon, email, missatge]); // Solo se vuelve a ejecutar si count cambia
+    if(email && email.length > 4){
+      let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      setErrorEmail(!reg.test(email))
+    }
+    setVisibilitatBoto(nom.length > 1 && ( telefon || ( email && email.length > 4 )) && !errorEmail  && missatge );
+  }, [nom, telefon, email, missatge]); // Nomes sexecuta si canvia algun destos camps
 
   return (
     <View style={styles.container}>
       { !loading && response === null ? <View style={styles.containerContent}>
+        <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }} extraScrollHeight={50} enableOnAndroid={true}>
         <Text style={styles.textExplicacio}>
-          Trobes a faltar el teu poble? Vols sol·licitar un esdeveniment nou? Pots contactar amb nosaltres omplint el formulari:
+          Trobes a faltar el teu poble?
         </Text>
+        <Text style={styles.textExplicacio}>
+          Vols sol·licitar un esdeveniment nou?
+        </Text>
+        <Text style={styles.textExplicacio}>
+          Pots contactar amb nosaltres omplint el formulari.
+        </Text>
+        <View style={styles.hr} />
           <View style={styles.form}>
             <View style={styles.formInput}>
               <Text style={styles.textInput}>
-                Nom i cognom
+                Nom i Cognom
               </Text>
               <TextInput
                 onChangeText = {(text) => setNom(text)}
                 autoCompleteType="name"
                 style={styles.input}
+                maxLength={40}
               />
             </View>
             <View style={styles.formInput}>
@@ -71,6 +104,7 @@ export default function ContactarScreen( props ) {
                 autoCompleteType="tel"
                 keyboardType="numeric"
                 style={styles.input}
+                maxLength={12}
               />
             </View>
             <View style={styles.formInput}>
@@ -82,7 +116,9 @@ export default function ContactarScreen( props ) {
                 autoCompleteType="email"
                 keyboardType="email-address"
                 style={styles.input}
+                maxLength={40}
               />
+              { errorEmail ? <Text style={styles.textError}> Email no és vàlid! </Text> : null}
             </View>
             <View style={styles.formInput}>
               <Text style={styles.textInput}>
@@ -94,14 +130,16 @@ export default function ContactarScreen( props ) {
                 keyboardType="email-address"
                 multiline={true}
                 blurOnSubmit={true}
+                maxLength={1000}
                 style={[styles.input, styles.area]}
               />
             </View>
           </View>
+        </KeyboardAwareScrollView>
           { boto ? <View style={styles.botoContainer}>
             <TouchableOpacity
               style={styles.boto}
-              onPress= {() => enviarFormulari(setLoading, setResponse, nom, telefon, email, missatge)}>
+              onPress= {() => enviarFormulari(setLoading, setResponse, nom, telefon, email, missatge, visibilitat, poble.id)}>
               <Text style={styles.botoText} >
                 Enviar
               </Text>
@@ -122,12 +160,13 @@ export default function ContactarScreen( props ) {
           <Text style={{fontSize: 20, fontFamily: 'mon-medium', textAlign : 'center'}}>Torna-ho a provar més tard</Text>
           <Text style={{fontSize: 18, fontFamily: 'open-sans', textAlign : 'center'}}>Disculpa les molèsties</Text>
       </View> }
-      <TouchableOpacity
-        style={styles.footer}
-        onPress={handleVidalFun}>
-        <Text style={styles.textFooter}>FemPoble Ⓡ {new Date().getFullYear()}</Text>
-        <Text style={styles.textFooterBottom}>Desenvolupat per Josep Vidal, clica per saber més</Text>
-      </TouchableOpacity>
+      <View style={styles.ContainerBottom}>
+        <TouchableOpacity
+          onPress={handleVidalFun}
+          style={styles.botoBottom}>
+            <Image source={logo} style={styles.logo}/>
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }
@@ -149,23 +188,36 @@ const styles = StyleSheet.create({
   textExplicacio : {
     fontSize: 16, fontFamily:'open-sans'
   },
+  hr : {
+    borderWidth: 1,
+    borderColor : Colors.llistat1,
+    marginTop: 15,
+    marginBottom: 10,
+    opacity: 0.5,
+  },
   form : {
-    marginVertical : 5
+    marginVertical : 5,
+    flex: 1,
   },
   formInput: {
-    flexDirection : 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 10,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-start',
+    marginBottom: 5,
   },
   textInput : {
-    width: '20%', height: 40, fontFamily: 'mon-bold',
+    fontFamily: 'open-sans', fontWeight: 'bold'
   },
   input : {
-    backgroundColor: Colors.llistat1, padding: 10, flex: 1, height: 40, borderRadius: 5
+    backgroundColor: Colors.llistat1,
+    padding: 10,
+    width: '100%',
+    height: 40,
+    marginTop: 5,
+    marginBottom: 5,
   },
   area : {
-    height: 90,
+    height: 60,
+    textAlignVertical: 'top'
   },
   botoContainer : {
     flex: 1, alignItems: 'flex-end'
@@ -176,8 +228,15 @@ const styles = StyleSheet.create({
   botoText : {
     textAlign:'right', color: Colors.titolsPantalles, 'textTransform':'uppercase', marginHorizontal: 10
   },
-  footer : {
-    position: 'absolute', bottom:0, width: '100%', backgroundColor: Colors.corporatiu, padding: 10
+  ContainerBottom:{
+    position:'absolute', bottom: 0, width: '100%', paddingHorizontal: 15, paddingVertical: 10, backgroundColor: Colors.corporatiu,
+    borderTopWidth: 25, borderColor: Colors.fondo
+  },
+  botoBottom : {
+    flex: 1, alignItems: 'center', justifyContent: 'center',  maxHeight: 35,
+  },
+  logo : {
+    resizeMode: 'contain', alignItems: 'center', alignSelf: 'center', width: '20%'
   },
   textFooter : {
     textAlign: 'center', fontFamily: 'newrotic', color: 'white'
@@ -189,8 +248,14 @@ const styles = StyleSheet.create({
    flexDirection: "row",justifyContent: "flex-end",paddingRight:10, width: 120
   },
   resultsContainer : {
-    flex: 1, justifyContent: 'center', alignItems : 'center', paddingHorizontal: 20
-  }
+    flex: 1, justifyContent: 'center', alignItems : 'center', paddingTop: 0, paddingBottom:  20
+  },
+  textError : {
+    position:'absolute', right:10, top: 35, color: Colors.roigos, fontSize: 11, fontFamily: 'open-sans', fontWeight: 'bold'
+  },
+  logo : {
+    resizeMode: 'contain', alignItems: 'center', alignSelf: 'center', width: '25%',
+  },
 });
 
 ContactarScreen.navigationOptions = ( props ) => {
