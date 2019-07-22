@@ -12,6 +12,7 @@ import Colors from '../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import NavigationService from '../components/NavigationService.js';
 import RowEsdeveniment  from '../components/RowEsdeveniment';
+import { compartir } from '../helpers/Compartir';
 
 const AnarAlEvent = ( event ) => {
   NavigationService.navigate('Event', { event });
@@ -48,7 +49,7 @@ export default function LlistatEventsScreen( props ) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.fondo,
+    backgroundColor: Colors.llistat1,
   },
   scrollContainer: {
     flex: 1,
@@ -61,11 +62,14 @@ const styles = StyleSheet.create({
   textFooter : {
     color: Colors.titolsPantalles,
     fontFamily: 'mon-medium',
+  },
+  botoMenu : {
+   flexDirection: "row",justifyContent: "flex-end", paddingRight:20, width: 160
   }
 });
 
-LlistatEventsScreen.navigationOptions = ({navigation}) => {
-  const { dia } = navigation.state.params;
+LlistatEventsScreen.navigationOptions = (props) => {
+  const { dia } = props.navigation.state.params;
   return {
     title: dia.nom_especial ? dia.nom_especial : dia.noms.nom_dalt + ' ' + dia.noms.nom_baix,
     headerStyle: {
@@ -78,13 +82,9 @@ LlistatEventsScreen.navigationOptions = ({navigation}) => {
       textTransform: 'uppercase',
     },
     headerRight: (
-       <View style={{flexDirection: "row",justifyContent: "flex-end",paddingRight:10, width: 120}}>
-         <TouchableOpacity
-            onPress={() => navigation.openDrawer()}
-           >
-             <Ionicons name="md-menu" size={22} color={Colors.titolsPantalles} />
-         </TouchableOpacity>
-       </View>
+       <TouchableOpacity style={styles.botoMenu} onPress={() =>  props.navigation.openDrawer()}>
+          <Ionicons name="md-menu" size={22} color={Colors.titolsPantalles} />
+       </TouchableOpacity>
      )
   }
 };

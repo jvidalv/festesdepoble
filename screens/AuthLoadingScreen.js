@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Colors from '../constants/Colors';
 import NavigationService from '../components/NavigationService.js';
-import logo from '../assets/images/logo.png';
+import logo from '../assets/images/logo-loading.png';
 
 export default function AuthLoadingScreen(props) {
   useEffect( () => {

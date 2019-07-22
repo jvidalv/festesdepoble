@@ -15,16 +15,18 @@ import { Ionicons } from '@expo/vector-icons';
 import RowFiltre from '../components/RowFiltre';
 import NavigationService from '../components/NavigationService';
 import ErrorConnexio  from '../components/ErrorConnexio';
-import { useFetchPoble } from "../helpers/Hooks";
+import { useFetchFestivitat } from "../helpers/Hooks";
 import { usePoble } from "../helpers/Storage";
 import { useDemanarLocalitzacio } from '../helpers/PermisosLocalitzacio';
+import { compartir } from '../helpers/Compartir';
 import Colors from '../constants/Colors';
 import Urls from '../constants/Urls';
+import logoNegre from '../assets/images/fem-poble-negre.png';
 
 export default function MapaScreen(props) {
   const [loadingPoble, poble] = usePoble();
-  const [data, loading, setLoading] = useFetchPoble(poble);
-
+  const [data, loading, setLoading] = useFetchFestivitat();
+  // seleccionats
   useEffect(() => {
     setDiesSeleccionats(data.dies)
   }, [data])
@@ -35,7 +37,10 @@ export default function MapaScreen(props) {
 
   return (
       <View style={styles.container}>
-        { data.dies && data.dies.length ? <MapView
+        {loading ? <View style={styles.Loader}>
+            <ActivityIndicator color="black" size="large"/>
+          </View>
+        : data && data.dies && data.dies.length ? <MapView
           toolbarEnabled={false}
           loadingEnabled={true}
           style={{flex: 1}}
@@ -52,11 +57,8 @@ export default function MapaScreen(props) {
                 onPress={() => setInfoMarker({visible : true, event: event})}/>)
               : null
           })}
-        </MapView> : data === false && !loading ? <ErrorConnexio callback={setLoading.bind(this)}/>
-          : <View style={styles.Loader}>
-              <ActivityIndicator color="black" size="large"/>
-            </View>
-        }
+        </MapView>
+        : <ErrorConnexio callback={setLoading.bind(this)}/> }
         <View
           style={styles.filterContainer}
           >
@@ -64,7 +66,7 @@ export default function MapaScreen(props) {
             <TouchableOpacity
                style={styles.filterText}
                onPress={() => setFiltreDies(!filtreDies)}>
-              <Text style={{fontSize: 18, color: Colors.titolsPantalles}}>Filtrar per dia</Text>
+              <Text style={{fontSize: 18, color: 'black', fontFamily: 'mon-bold'}}>Filtrar per dia</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.filterIcon}
@@ -88,58 +90,44 @@ export default function MapaScreen(props) {
               : null
           }
           </View>
-          { infoMarker.visible ? <ScrollView style={styles.infoMarkerContent}>
+          { infoMarker.visible ? <View style={styles.infoMarker}>
+            <ScrollView style={styles.infoMarkerContent}>
               <View style={[styles.contentContainer]}>
                 <Text style={[styles.title, {color: Colors.roigos}]}>{infoMarker.event.nom}</Text>
               </View>
               <View style={[styles.contentContainer]}>
-                <Text style={styles.titleContent}>Localització</Text>
+                <Text style={styles.titleContent}>A on és?</Text>
                 <Text style={styles.textContent}>
                   {infoMarker.event.localitzacio}
                 </Text>
               </View>
               <View style={[styles.contentContainer]}>
-                <Text style={styles.titleContent}>Horaris</Text>
+                <Text style={styles.titleContent}>Quan és?</Text>
                 <Text style={styles.textContent}>
                   {infoMarker.event.dia_inici} a les {infoMarker.event.hora_inici}{infoMarker.event.hora_fi ? ' fins les ' + infoMarker.event.hora_fi : ''}
                 </Text>
               </View>
               <View style={[styles.contentContainer]}>
                 <Text style={styles.titleContent}>Més informació</Text>
-                <Text style={styles.textContent}>{infoMarker.event.descripcio}</Text>
-              </View>
-              <View style={[styles.contentContainer]}>
-                <Text style={styles.titleContent}>Organitzador</Text>
-                <Text style={styles.textContent}>{infoMarker.event.organitzador}</Text>
+                <Text numberOfLines={2} style={styles.textContent}>{infoMarker.event.descripcio}</Text>
               </View>
             </ScrollView>
+            <View style={{flexDirection: 'row', marginTop: 5}}>
+              <TouchableOpacity
+                style={[styles.botoModal]}
+                onPress={() => NavigationService.navigate('Event', { event: infoMarker.event })}
+                >
+                <Ionicons name="md-eye" size={26} color="black" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.botoModal, {backgroundColor: Colors.llistat2}]}
+                onPress={() => compartir(infoMarker.event)}
+                >
+                <Ionicons name="md-share" size={26} color="black" />
+              </TouchableOpacity>
+            </View>
+            </View>
             : null }
-            { infoMarker.visible ? <ScrollView style={styles.infoMarkerContent}>
-                <View style={[styles.contentContainer]}>
-                  <Text style={[styles.title, {color: Colors.roigos}]}>{infoMarker.event.nom}</Text>
-                </View>
-                <View style={[styles.contentContainer]}>
-                  <Text style={styles.titleContent}>Localització</Text>
-                  <Text style={styles.textContent}>
-                    {infoMarker.event.localitzacio}
-                  </Text>
-                </View>
-                <View style={[styles.contentContainer]}>
-                  <Text style={styles.titleContent}>Horaris</Text>
-                  <Text style={styles.textContent}>
-                    {infoMarker.event.dia_inici} a les {infoMarker.event.hora_inici}{infoMarker.event.hora_fi ? ' fins les ' + infoMarker.event.hora_fi : ''}
-                  </Text>
-                </View>
-                <View style={[styles.contentContainer]}>
-                  <Text style={styles.titleContent}>Més informació</Text>
-                  <Text style={styles.textContent}>{infoMarker.event.descripcio}</Text>
-                </View>
-                <View style={[styles.contentContainer]}>
-                  <Text style={styles.titleContent}>Organitzador</Text>
-                  <Text style={styles.textContent}>{infoMarker.event.organitzador}</Text>
-                </View>
-              </ScrollView>
-              : null }
         </View>
     )
 }
@@ -157,13 +145,13 @@ const styles = StyleSheet.create({
   },
   filterContainer : {
     position:'absolute',
-    right: 10, top: 10,
-    alignItems: 'flex-end'
+    right: 15, top: 10, left: 10,
+    alignItems: 'flex-end', marginLeft: 30,
   },
   filterText: {
     flexDirection: 'row',
-    backgroundColor: Colors.corporatiu,
     paddingHorizontal: 5,
+    color: 'black',
     fontFamily: 'open-sans',
     justifyContent:'center',
     alignItems: 'center',
@@ -195,21 +183,29 @@ const styles = StyleSheet.create({
     fontFamily: 'open-sans',
     fontSize: 14,
   },
-  infoMarkerContent : {
+  infoMarker : {
     position: 'absolute',
     flex: 1,
     padding: 5,
     bottom: 10,
     left: 10,
     right: 10,
-    backgroundColor: Colors.titolsPantalles + 'CC'
+  },
+  infoMarkerContent : {
+    backgroundColor: Colors.llistat1 + 'CC',
+    borderRadius: 5,
   },
   Loader : {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
-  }
-
+  },
+  botoMenu : {
+   flexDirection: "row",justifyContent: "flex-end", paddingRight:20, width: 160
+ },
+ botoModal : {
+   backgroundColor: Colors.llistat1, flexGrow: 1, justifyContent: 'center', alignItems: 'center', padding: 10
+ }
 });
 
 const estaSeleccionat = (sel, llistat) => {
@@ -228,9 +224,10 @@ const gestionarSeleccionats = (sel, llistat) => {
 
 const colors = ['violet', 'green', 'blue', 'gold', 'red', 'indigo', 'orange', 'tan', 'linen',  'blue', 'yellow', 'teal',  'tomato']
 
-MapaScreen.navigationOptions = ({ navigation }) => {
+MapaScreen.navigationOptions = (props) => {
+  const { poble } = props.screenProps;
   return {
-    title: 'Mapa',
+    title: poble ? poble.festivitat.nom : 'Events al mapa',
     headerStyle: {
       backgroundColor: Colors.corporatiu,
     },
@@ -240,13 +237,9 @@ MapaScreen.navigationOptions = ({ navigation }) => {
       textTransform: 'uppercase',
     },
     headerRight: (
-       <View style={{flexDirection: "row",justifyContent: "flex-end",paddingRight:10, width: 120}}>
-         <TouchableOpacity
-            onPress={() => navigation.openDrawer()}
-           >
-             <Ionicons name="md-menu" size={22} color={Colors.titolsPantalles} />
-         </TouchableOpacity>
-       </View>
+      <TouchableOpacity style={styles.botoMenu} onPress={() =>  props.navigation.openDrawer()}>
+         <Ionicons name="md-menu" size={22} color={Colors.titolsPantalles} />
+      </TouchableOpacity>
      )
   }
 };

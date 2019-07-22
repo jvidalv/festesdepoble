@@ -1,15 +1,18 @@
 {
   "expo": {
     "name": "Festes de Poble",
+    "description": "No et perdis cap festa de poble mai més!",
     "slug": "festes-de-poble",
     "privacy": "public",
     "sdkVersion": "33.0.0",
+    "githubUrl" : "https://github.com/jvidalv/festesdepoble",
     "platforms": [
       "ios",
       "android",
     ],
+    "primaryColor" : "#ff7300",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/images/icon.png",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -35,7 +38,7 @@
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyBfe_U0pfrpqYjkxkcUVpo5W7yxAs1_hhg"
-        }
+        },
       }
     }
   }

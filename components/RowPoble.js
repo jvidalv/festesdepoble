@@ -16,6 +16,8 @@ export default function RowPoble({poble, index}) {
 
   const guardarPoble = () => {
     const guardar = async () => {
+      await AsyncStorage.removeItem('poble')
+      await AsyncStorage.removeItem('events')
       await AsyncStorage.setItem('poble', JSON.stringify(poble))
       NavigationService.navigate('AuthLoading', { poble : poble } );
     }
@@ -28,7 +30,7 @@ export default function RowPoble({poble, index}) {
       onPress={poble.festivitat.id !== false ? guardarPoble : () => false}
       delayPressIn={50}
       >
-      <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Escut_de_Vilalba_dels_Arcs.svg/208px-Escut_de_Vilalba_dels_Arcs.svg.png'}}  style={styles.pobleImatge}/>
+      <Image source={{uri: 'https://admin.fempoble.app' + poble.imatge_url}}  style={styles.pobleImatge}/>
       <View style={styles.pobleTextContainer}>
         <Text style={{fontFamily:'mon-bold', fontSize: 22}}>
           {poble.nom}

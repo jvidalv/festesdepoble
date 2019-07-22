@@ -28,12 +28,12 @@ const LlistatStack = createStackNavigator(
 );
 
 LlistatStack.navigationOptions = {
-  drawerLabel : 'Llistat de esdeveniments',
+  drawerLabel : 'Los dies de festa',
   activeTintColor : Colors.titolsPantalles,
   drawerIcon : ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name="md-list"
+      name="md-list-box"
     />
   ),
 };
@@ -47,12 +47,12 @@ const MapaStack = createStackNavigator(
 );
 
 MapaStack.navigationOptions = {
-  drawerLabel : 'Esdeveniments al mapa',
+  drawerLabel : 'Veure\'ls al mapa',
   activeTintColor : Colors.titolsPantalles,
   drawerIcon : ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name="md-map"
+      name="md-planet"
     />
   ),
 };
@@ -73,7 +73,7 @@ SelectorPoblesStack.navigationOptions = {
   drawerIcon : ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name="md-swap"
+      name="md-return-left"
     />
   ),
 };
@@ -93,7 +93,7 @@ ContactarStack.navigationOptions = {
   drawerIcon : ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name="md-mail"
+      name="md-chatbubbles"
     />
   ),
 };

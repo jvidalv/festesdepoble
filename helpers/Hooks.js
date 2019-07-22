@@ -3,49 +3,57 @@ import { AsyncStorage } from 'react-native';
 import Urls from '../constants/Urls';
 
 // fetch general
-function useFetch(url, storer = {}) {
+function useFetchPoble() {
   const [data, setData] = useState(false);
   const [loading, setLoading] = useState(true);
   const fetchUrl = async () => {
-    const response = await fetch(url)
-    .then((response) => response.ok ? response.json() : false)
+    const response = await fetch(Urls.pobles)
+    .then((response) => response.ok ? response.json() : null )
+    .then(response => response)
     .catch((error) => false)
-    // guardem a memoria local
-    if(storer.nom) AsyncStorage.setItem(storer.nom, JSON.stringify(response))
     setData(response);
     setLoading(false);
+
   }
 
   useEffect(() => {
-    if(!data){
-      fetchUrl();
-    }
+    if(loading) fetchUrl();
   }, [loading]);
-
-  return [data, loading,setLoading];
-}
-
-// fetch poble
-function useFetchPoble(poble){
-  const [data, setData] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const fetchUrl = async () => {
-    const response = await fetch(Urls.festivitat + poble.id)
-    .then((response) => response.ok ? response.json() : false)
-    .catch((error) => false)
-    // guardem a memoria local
-    AsyncStorage.setItem('events', JSON.stringify(response))
-    setData(response);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    if(poble.id && data === false){
-      fetchUrl();
-    }
-  }, [loading, poble]);
 
   return [data, loading, setLoading];
 }
 
-export { useFetch, useFetchPoble };
+// recuperar festivitat en tots los events, has de passar un objecte poble
+function useFetchFestivitat(){
+  const [data, setData] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const fetchUrl = async () => {
+    const poble = await AsyncStorage.getItem('poble').then((response) => JSON.parse(response))
+
+    const response = await fetch(Urls.festivitat + poble.id)
+    .then((response) => {
+      if(response.ok) {
+        return response.json();
+      }
+      else throw new Error(response.status);
+    })
+    .then((response) => {
+      AsyncStorage.setItem('events', JSON.stringify(response))
+      return response
+    })
+    .catch( async (error) => {
+        const response = await AsyncStorage.getItem('events').then((response) => JSON.parse(response))
+        return response;
+    })
+    setData(response)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    if(loading) fetchUrl();
+  }, [loading]);
+
+  return [data, loading, setLoading];
+}
+
+export { useFetchPoble, useFetchFestivitat };

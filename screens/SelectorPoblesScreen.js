@@ -9,7 +9,7 @@ import {
   View,
   ActivityIndicator
 } from 'react-native';
-import { useFetch } from "../helpers/Hooks";
+import { useFetchPoble } from "../helpers/Hooks";
 import NavigationService from '../components/NavigationService.js';
 import RowPoble from '../components/RowPoble';
 import ErrorConnexio  from '../components/ErrorConnexio';
@@ -23,22 +23,31 @@ const AnarAContacta = ( ) => {
 }
 
 export default function SelectorPoblesScreen( props ) {
-  const [data, loading, setLoading] = useFetch(Urls.pobles);
+  const [data, loading, setLoading] = useFetchPoble(Urls.pobles);
+  useEffect(() => {
+    const willFocus = props.navigation.addListener(
+      'willFocus',
+      payload => {
+        setLoading(true);
+      }
+    );
+  }, [])
+
   return (
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.contentContainer}>
           <Image source={logo} style={styles.logo}/>
-          { data.length ? <View>
-            <Text style={styles.textSeleccio}> Selecciona una població: </Text>
-            { data.map(( poble, index ) => (
-              <RowPoble key={poble.id} index={index} poble={poble} />
-            )) }
-          </View> :
-            data === false && !loading ? <ErrorConnexio callback={setLoading.bind(this)}/>
-            : <View style={styles.loadingContainer}>
+          {
+            loading ? <View style={styles.loadingContainer}>
                 <ActivityIndicator color="white" size="large"/>
               </View>
+            : data && data.length ? <View>
+              { data.map(( poble, index ) => (
+                <RowPoble key={poble.id} index={index} poble={poble} />
+              )) }
+            </View>
+            : <ErrorConnexio callback={setLoading.bind(this)}/>
           }
         </View>
       </ScrollView>
@@ -64,14 +73,15 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   logo : {
-    resizeMode: 'contain', alignItems: 'center', alignSelf: 'center', width: '70%'
+    resizeMode: 'contain', alignItems: 'center', alignSelf: 'center', width: '70%', height: 220
   },
   footer : {
     alignItems: 'center',
-    backgroundColor: Colors.corporatiu,
+    backgroundColor: '#ff7300',
     padding: 10,
   },
   textSeleccio : {
+    marginTop: -10,
     marginBottom: 5,
     fontSize: 16
   },

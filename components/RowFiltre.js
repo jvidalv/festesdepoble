@@ -17,7 +17,7 @@ export default function RowFiltre( props ) {
         style={{backgroundColor: bgcolor}}
         key={item.id}
         onPress={() => setSeleccionats( gestionarSeleccionats( item, seleccionats ))}>
-          <Text style={styles.Text}> {nom} </Text>
+          <Text style={styles.Text} numberOfLines={1}> {nom} </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.Icon, {backgroundColor: bgcolor}]}
@@ -30,7 +30,7 @@ export default function RowFiltre( props ) {
 
 const styles = StyleSheet.create({
   Row:{
-    flexDirection: 'row', marginTop: 5, alignSelf: 'flex-end'
+    flexDirection: 'row', marginTop: 5, alignSelf: 'flex-end',
   },
   Text:{
     fontSize: 18, color: Colors.titolsPantalles

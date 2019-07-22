@@ -5,7 +5,7 @@ import NavigationService from '../components/NavigationService.js';
 function useDesconectar(loading, data) {
   if(loading && data === null){
     const canviarPoble = () => {
-      const eliminarDades = async () => await AsyncStorage.removeItem('poble')
+      const eliminarDades = async () => await AsyncStorage.multiRemove(['poble', 'events'])
       eliminarDades()
       NavigationService.navigate('AuthLoading');
     }

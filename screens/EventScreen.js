@@ -7,10 +7,12 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Share
 } from 'react-native';
 import MapViewModal from '../components/MapViewModal';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
+import { compartir } from '../helpers/Compartir';
 
 export default function EventScreen( props ) {
   const { event } = props.navigation.state.params;
@@ -20,13 +22,13 @@ export default function EventScreen( props ) {
           <Text style={[styles.title, {color: Colors.roigos}]}>{event.nom}</Text>
         </View>
         <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2}]}>
-          <Text style={styles.titleContent}>Localització</Text>
+          <Text style={styles.titleContent}>A on és?</Text>
           <Text style={styles.textContent}>
             {event.localitzacio}
           </Text>
         </View>
         <View style={[styles.contentContainer, { backgroundColor: Colors.llistat1}]}>
-          <Text style={styles.titleContent}>Horaris</Text>
+          <Text style={styles.titleContent}>Quan és?</Text>
           <Text style={styles.textContent}>
             A les {event.hora_inici}{event.hora_fi ? ' fins les ' + event.hora_fi : ''}
           </Text>
@@ -35,10 +37,10 @@ export default function EventScreen( props ) {
           <Text style={styles.titleContent}>Més informació</Text>
           <Text style={styles.textContent}>{event.descripcio}</Text>
         </View>
-        <View style={[styles.contentContainer, { backgroundColor: Colors.llistat1}]}>
+        { event.organitzador ? <View style={[styles.contentContainer, { backgroundColor: Colors.llistat1}]}>
           <Text style={styles.titleContent}>Organitzador</Text>
           <Text style={styles.textContent}>{event.organitzador}</Text>
-        </View>
+        </View> : null }
         {  event.latitude && event.longitude ? <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2}]}>
           <Text style={styles.titleContent}>Localització al mapa</Text>
           <MapViewModal event={event}/>
@@ -67,6 +69,9 @@ const styles = StyleSheet.create({
   textContent : {
     fontFamily: 'open-sans',
     fontSize: 16,
+  },
+  botoMenu : {
+   flexDirection: "row",justifyContent: "flex-end", paddingRight:20, width: 160
   }
 });
 
@@ -81,13 +86,14 @@ EventScreen.navigationOptions = ({ navigation }) => {
     headerTitleStyle: {
       fontWeight: 'bold',
       textTransform: 'uppercase',
+      fontSize: 18,
     },
     headerRight: (
-       <View style={{flexDirection: "row",justifyContent: "flex-end",paddingRight:10, width: 120}}>
+       <View style={styles.botoMenu}>
          <TouchableOpacity
-            onPress={() => navigation.openDrawer()}
+            onPress={() => compartir(event)}
            >
-             <Ionicons name="md-menu" size={22} color={Colors.titolsPantalles} />
+             <Ionicons name="md-share" size={22} color={Colors.titolsPantalles} />
          </TouchableOpacity>
        </View>
      )
