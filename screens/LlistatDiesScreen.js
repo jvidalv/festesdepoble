@@ -29,7 +29,7 @@ export default function LlistatDiesScreen(props)
   const [data, loading, setLoading] = useFetchFestivitat();
   return (
     <View style={styles.container}>
-      { __DEV__ ? <TouchableOpacity onPress={() => useDesconectar(true, null)} ><Text> borrar tot</Text></TouchableOpacity> : null }
+      {/* { __DEV__ ? <TouchableOpacity onPress={() => useDesconectar(true, null)} ><Text> borrar tot</Text></TouchableOpacity> : null } */}
       <ScrollView
         style={[styles.container, data && data.dies ? { backgroundColor : data.dies.length % 2 ? Colors.llistat1 : Colors.llistat2} : null]}
         contentContainerStyle={styles.contentContainer}>
