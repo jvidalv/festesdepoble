@@ -13,7 +13,7 @@
     "primaryColor" : "#ff7300",
     "version": "1.0.0",
     "orientation": "default",
-    "icon": "./assets/images/mobile-logo.png",
+    "icon": "./assets/images/logo-mobile.png",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -39,6 +39,9 @@
         "googleMaps": {
           "apiKey": "AIzaSyBfe_U0pfrpqYjkxkcUVpo5W7yxAs1_hhg"
         },
+      },
+      "adaptiveIcon" : {
+        "backgroundColor" : "#ff7300"
       }
     }
   }
