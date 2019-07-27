@@ -27,7 +27,7 @@ export default function RowEsdeveniment(props) {
         </Text> : null}
       </View>
       <View style={styles.ContainerTextRight}>
-        <Text style={styles.TextRightTop}>
+        <Text numberOfLines={2} style={styles.TextRightTop}>
           {event.nom}
         </Text>
         <View style={{flexDirection: 'row', alingItems : 'center'}}>

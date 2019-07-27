@@ -23,13 +23,13 @@ export default function EventScreen( props ) {
         </View>
         <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2}]}>
           <Text style={styles.titleContent}>A on és?</Text>
-          <Text style={styles.textContent}>
+          <Text numberOfLines={1} style={styles.textContent}>
             {event.localitzacio}
           </Text>
         </View>
         <View style={[styles.contentContainer, { backgroundColor: Colors.llistat1}]}>
           <Text style={styles.titleContent}>Quan és?</Text>
-          <Text style={styles.textContent}>
+          <Text numberOfLines={1} style={styles.textContent}>
             A les {event.hora_inici}{event.hora_fi ? ' fins les ' + event.hora_fi : ''}
           </Text>
         </View>
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
 EventScreen.navigationOptions = ({ navigation }) => {
   const { event } = navigation.state.params;
   return {
-    title: ( event.dia_inici ? event.dia_inici : '') + ' a les ' + event.hora_inici,
+    title: ( event.dia_inici ?? '') + ' a les ' + event.hora_inici,
     headerStyle: {
       backgroundColor: Colors.corporatiu,
     },

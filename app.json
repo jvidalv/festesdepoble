@@ -13,7 +13,7 @@
     "primaryColor" : "#ff7300",
     "version": "1.0.0",
     "orientation": "default",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/mobile-logo.png",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -26,8 +26,8 @@
       "**/*"
     ],
     "ios": {
+      "buildNumber" : "0.5.0",
       "bundleIdentifier": "josep.festespoble",
-      "supportsTablet": false,
       "config" : {
         "googleMapsApiKey": "AIzaSyBfe_U0pfrpqYjkxkcUVpo5W7yxAs1_hhg"
       }

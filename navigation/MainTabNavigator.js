@@ -42,6 +42,7 @@ const MapaStack = createStackNavigator(
   {
     Mapa: MapaScreen,
     Event: EventScreen,
+    LlistatEvents: LlistatEventsScreen,
   },
   config
 );

@@ -6,7 +6,7 @@ async function compartir(object){
       const result = await Share.share({
         title: object.nom,
         message: object.share,
-        url: 'www.vidal.fun',
+        url: 'https://www.fempoble.app',
       });
 
       if (result.action === Share.sharedAction) {

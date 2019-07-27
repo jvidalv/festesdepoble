@@ -43,6 +43,7 @@ export default function MapaScreen(props) {
         : data && data.dies && data.dies.length ? <MapView
           toolbarEnabled={false}
           loadingEnabled={true}
+          showsCompass={false}
           style={{flex: 1}}
           initialRegion={{ latitude: poble.latitude, longitude: poble.longitude, latitudeDelta: 0.0022, longitudeDelta: 0.0121 }}
           onPress={() => setInfoMarker({visible : false, event: false})}
@@ -52,9 +53,10 @@ export default function MapaScreen(props) {
               dia.events.map((event) => <MapView.Marker
                 key={event.id}
                 pinColor={colors[index]}
+                stopPropagation={true}
                 touchable={true}
                 coordinate={{ latitude: event.latitude, longitude: event.longitude, latitudeDelta: 0.0022, longitudeDelta: 0.0121 }}
-                onPress={() => setInfoMarker({visible : true, event: event})}/>)
+                onPress={() => setInfoMarker({visible : true, dia: dia, event: event, color: colors[index]})}/>)
               : null
           })}
         </MapView>
@@ -93,18 +95,11 @@ export default function MapaScreen(props) {
           { infoMarker.visible ? <View style={styles.infoMarker}>
             <ScrollView style={styles.infoMarkerContent}>
               <View style={[styles.contentContainer]}>
-                <Text style={[styles.title, {color: Colors.roigos}]}>{infoMarker.event.nom}</Text>
+                <Text  numberOfLines={2} style={[styles.title, {color: Colors.roigos}]}>{infoMarker.event.nom}</Text>
               </View>
               <View style={[styles.contentContainer]}>
-                <Text style={styles.titleContent}>A on és?</Text>
                 <Text style={styles.textContent}>
-                  {infoMarker.event.localitzacio}
-                </Text>
-              </View>
-              <View style={[styles.contentContainer]}>
-                <Text style={styles.titleContent}>Quan és?</Text>
-                <Text style={styles.textContent}>
-                  {infoMarker.event.dia_inici} a les {infoMarker.event.hora_inici}{infoMarker.event.hora_fi ? ' fins les ' + infoMarker.event.hora_fi : ''}
+                  {infoMarker.event.localitzacio}, {infoMarker.event.dia_inici} a les {infoMarker.event.hora_inici}{infoMarker.event.hora_fi ? ' fins les ' + infoMarker.event.hora_fi : ''}
                 </Text>
               </View>
               <View style={[styles.contentContainer]}>
@@ -112,20 +107,27 @@ export default function MapaScreen(props) {
                 <Text numberOfLines={2} style={styles.textContent}>{infoMarker.event.descripcio}</Text>
               </View>
             </ScrollView>
-            <View style={{flexDirection: 'row', marginTop: 5}}>
-              <TouchableOpacity
-                style={[styles.botoModal]}
-                onPress={() => NavigationService.navigate('Event', { event: infoMarker.event })}
-                >
-                <Ionicons name="md-eye" size={26} color="black" />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.botoModal, {backgroundColor: Colors.llistat2}]}
-                onPress={() => compartir(infoMarker.event)}
-                >
-                <Ionicons name="md-share" size={26} color="black" />
-              </TouchableOpacity>
-            </View>
+              <View style={styles.buttonsRow}>
+                <TouchableOpacity
+                  style={[styles.botonsEsquerra, {backgroundColor: infoMarker.color, opacity: 0.9}]}
+                  onPress={() => NavigationService.navigate('LlistatEvents', { dia: infoMarker.dia })}
+                  >
+                  <Ionicons name="md-list" size={26} color="white" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.botonsEsquerra, {width: '15%', backgroundColor: Colors.taronjaLogo + 'E6'}]}
+                  onPress={() => NavigationService.navigate('Event', {  event: infoMarker.event })}
+                  >
+                  <Ionicons name="md-eye" size={26} color="white" />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[styles.botoModal, {backgroundColor: Colors.roigos + 'E6'}]}
+                  onPress={() => compartir(infoMarker.event)}
+                  >
+                  <Ionicons name="md-share" size={26} color="white" />
+                </TouchableOpacity>
+              </View>
             </View>
             : null }
         </View>
@@ -162,7 +164,6 @@ const styles = StyleSheet.create({
     paddingHorizontal:5,
     justifyContent:'center', alignItems: 'center',
     minWidth: 24,
-    borderRadius: 30
   },
   textBold : {
     fontWeight: 'bold'
@@ -192,20 +193,25 @@ const styles = StyleSheet.create({
     right: 10,
   },
   infoMarkerContent : {
-    backgroundColor: Colors.llistat1 + 'CC',
-    borderRadius: 5,
+    backgroundColor: '#ffffffE6',
   },
   Loader : {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
+  buttonsRow : {
+    flexDirection: 'row', marginTop: 5
+  },
+  botonsEsquerra : {
+    width: '10%', marginRight: 5, justifyContent: 'center', alignItems: 'center'
+  },
   botoMenu : {
    flexDirection: "row",justifyContent: "flex-end", paddingRight:20, width: 160
  },
- botoModal : {
-   backgroundColor: Colors.llistat1, flexGrow: 1, justifyContent: 'center', alignItems: 'center', padding: 10
- }
+   botoModal : {
+     backgroundColor: '#ffffff', flexGrow: 1, justifyContent: 'center', alignItems: 'center', padding: 10
+   }
 });
 
 const estaSeleccionat = (sel, llistat) => {

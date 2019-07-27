@@ -22,14 +22,14 @@ export default function RowDia(props) {
         >
         <View style={{width: 20, marginRight: 20, backgroundColor: colors[index], opacity: 0.8}}/>
         <View style={styles.ContainerTextLeft}>
-          <Text style={[styles.TextLeft, {fontFamily: 'mon-bold'}]}>
+          <Text style={[styles.TextLeft, {fontFamily: 'open-sans',  fontWeight: 'bold'}]}>
             {dia.nom_especial ? dia.nom_especial : dia.noms.nom_dalt + ' ' + dia.noms.nom_baix}
           </Text>
-            {dia.nom_especial ? <Text style={[styles.TextLeft, {fontSize: 18, fontFamily: 'mon-medium'}]}>
+            {dia.nom_especial ? <Text style={[styles.TextLeft, {fontSize: 16, fontFamily: 'open-sans'}]}>
                 {dia.noms.nom_dalt + ' ' + dia.noms.nom_baix}
               </Text> : null }
           <Text style={[styles.TextLeft, styles.TextNumEvents]}>
-            { dia.numero_events } { dia.numero_events > 1 ? 'esdeveniments' : 'esdeveniment'}
+            { dia.numero_events } { dia.numero_events > 1 ? 'events' : 'event'}
           </Text>
         </View>
         <View style={styles.ContainerTextRight}>

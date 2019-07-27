@@ -29,7 +29,6 @@ function useFetchFestivitat(){
   const [loading, setLoading] = useState(true);
   const fetchUrl = async () => {
     const poble = await AsyncStorage.getItem('poble').then((response) => JSON.parse(response))
-
     const response = await fetch(Urls.festivitat + poble.id)
     .then((response) => {
       if(response.ok) {

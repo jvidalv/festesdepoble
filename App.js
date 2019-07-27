@@ -9,15 +9,19 @@ import AppNavigator from './navigation/AppNavigator';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import NavigationService from './components/NavigationService';
 import LlistatDiesScreen from './screens/LlistatDiesScreen';
-
+import { registerForPushNotificationsAsync } from "./helpers/PermisosPush";
 const TopLevelNavigator = createStackNavigator({LlistatDiesScreen : LlistatDiesScreen})
 const AppContainer = createAppContainer(TopLevelNavigator);
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+
   // carreguem poble si esta disponible
   const [poble, setPoble] = useState(null);
-  useEffect( () => { AsyncStorage.getItem('poble').then((response) => setPoble(JSON.parse(response)))}, [])
+  useEffect( () => {
+    AsyncStorage.getItem('poble').then((response) => setPoble(JSON.parse(response)))
+    registerForPushNotificationsAsync()
+  }, [])
 
   if (!isLoadingComplete && !props.skipLoadingScreen && poble === null) {
     return (
@@ -50,14 +54,8 @@ async function loadResourcesAsync() {
       require('./assets/images/logo-loading.png'),
     ]),
     Font.loadAsync({
-      // This is the font that we are using for our tab bar
       ...Ionicons.font,
-      // We include SpaceMono because we use it in HomeScreen.js. Feel free to
-      // remove this if you are not using it in your app
-      // 'playfair': require('./assets/fonts/PlayfairDisplay-Regular.ttf'),
-      // 'playfair-bold': require('./assets/fonts/PlayfairDisplay-Bold.ttf'),
       'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
-      'newrotic': require('./assets/fonts/Newrotic.ttf'),
       'mon-regular': require('./assets/fonts/Montserrat-Regular.ttf'),
       'mon-bold': require('./assets/fonts/Montserrat-Bold.ttf'),
       'mon-black': require('./assets/fonts/Montserrat-Black.ttf'),

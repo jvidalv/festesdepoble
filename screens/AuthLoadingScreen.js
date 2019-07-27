@@ -10,13 +10,16 @@ import {
 import Colors from '../constants/Colors';
 import NavigationService from '../components/NavigationService.js';
 import logo from '../assets/images/logo-loading.png';
+import { registerForPushNotificationsAsync } from "../helpers/PermisosPush";
 
 export default function AuthLoadingScreen(props) {
   useEffect( () => {
     const _bootstrapAsync = async () => {
       const poble = await AsyncStorage.getItem('poble');
       if (poble) {
-        NavigationService.navigate('LlistatDies', { poble : JSON.parse(poble)});
+        var pobleParsed = JSON.parse(poble);
+        registerForPushNotificationsAsync('FESTIVITAT', { festivitat_id: pobleParsed.festivitat.id })
+        NavigationService.navigate('LlistatDies', { poble : pobleParsed});
       } else {
         NavigationService.navigate('Selector');
       }
