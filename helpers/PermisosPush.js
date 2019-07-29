@@ -6,7 +6,7 @@ import Urls from '../constants/Urls';
 // Demanen permisos per enviar notificacions
 // TIPOS -> POBLE i FESTIVITAT
 // dades objecte en lo q vulguem
-export async function registerForPushNotificationsAsync(tipo = 'POBLE', dades = {}) {
+export async function registerForPushNotificationsAsync() {
   const { status: existingStatus } = await Permissions.getAsync(
     Permissions.NOTIFICATIONS
   );
@@ -30,29 +30,15 @@ export async function registerForPushNotificationsAsync(tipo = 'POBLE', dades = 
   let token = await Notifications.getExpoPushTokenAsync();
 
   // POST the token to your backend server from where you can retrieve it to send push notifications.
-  if(tipo === 'POBLE'){
-    return fetch(Urls.poble_push, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        token:  token,
-        tipo: 0,
-      }),
-    });
-  } else { // tipo festivitat, recuperem festivitat i la guardem
-    return fetch(Urls.festivitat_push, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        token:  token,
-        festivitat_id: dades.festivitat_id,
-      }),
-    });
-  }
+  return fetch(Urls.token, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      token: token,
+      modul: 0,
+    }),
+  });
 }

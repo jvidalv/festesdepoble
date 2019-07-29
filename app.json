@@ -22,6 +22,10 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
+    "notification" : {
+      "icon": "./assets/images/icon_notis.png",
+      "color": "#ff7400",
+    },
     "assetBundlePatterns": [
       "**/*"
     ],

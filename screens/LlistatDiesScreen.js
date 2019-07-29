@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
   AsyncStorage,
+  ImageBackground
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import NavigationService from '../components/NavigationService.js';
@@ -17,6 +18,8 @@ import Colors from '../constants/Colors';
 import Urls from '../constants/Urls';
 import { useFetchFestivitat } from "../helpers/Hooks";
 import { useDesconectar } from "../helpers/Desconectar";
+import fondo from '../assets/images/patro-festa.jpg';
+
 // array tonta per a carregar rows quan no hi han dades
 const arrayLoader = [0,1,2,3,4,5,6]
 
@@ -28,22 +31,27 @@ export default function LlistatDiesScreen(props)
 {
   const [data, loading, setLoading] = useFetchFestivitat();
   return (
-    <View style={styles.container}>
+    <ImageBackground source={fondo} style={styles.container} imageStyle={{flex:1 , resizeMode: 'repeat'}}>
       <ScrollView
-        style={[styles.container, data && data.dies ? { backgroundColor : data.dies.length % 2 ? Colors.llistat1 : Colors.llistat2} : null]}
+        style={styles.scrollContainer}
         contentContainerStyle={styles.contentContainer}>
         { loading || data === false ? arrayLoader.map((dia, index) => <RowDia key={dia} index={index}  />)
           : data && data.id && data.dies.length ? data.dies.map(( dia, index ) => <RowDia key={dia.id} index={index} dia={dia} callback={() => AnarAlDia(dia)} />)
           : <ErrorConnexio callback={setLoading.bind(this)}/> }
       </ScrollView>
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.llistat1
+    width: '100%',
+    height: '100%',
+  },
+  scrollContainer: {
+    flex: 1,
+    backgroundColor: Colors.llistat1 + 'CE',
   },
   contentContainer: {
     paddingTop: 0,

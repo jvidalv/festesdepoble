@@ -15,9 +15,9 @@ const AppContainer = createAppContainer(TopLevelNavigator);
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
-
   // carreguem poble si esta disponible
   const [poble, setPoble] = useState(null);
+
   useEffect( () => {
     AsyncStorage.getItem('poble').then((response) => setPoble(JSON.parse(response)))
     registerForPushNotificationsAsync()
@@ -48,6 +48,7 @@ async function loadResourcesAsync() {
   await Promise.all([
     Asset.loadAsync([
       require('./assets/images/logo.png'),
+      require('./assets/images/patro-festa.jpg'),
       require('./assets/images/fempoble.png'),
       require('./assets/images/fem-poble-negre.png'),
       require('./assets/images/fem-poble-blanc.png'),
@@ -58,9 +59,9 @@ async function loadResourcesAsync() {
       'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       'mon-regular': require('./assets/fonts/Montserrat-Regular.ttf'),
       'mon-bold': require('./assets/fonts/Montserrat-Bold.ttf'),
-      'mon-black': require('./assets/fonts/Montserrat-Black.ttf'),
       'mon-medium': require('./assets/fonts/Montserrat-Medium.ttf'),
       'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+      'open-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
     }),
   ]);
 }

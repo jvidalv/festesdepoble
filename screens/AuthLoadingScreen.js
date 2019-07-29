@@ -15,11 +15,9 @@ import { registerForPushNotificationsAsync } from "../helpers/PermisosPush";
 export default function AuthLoadingScreen(props) {
   useEffect( () => {
     const _bootstrapAsync = async () => {
-      const poble = await AsyncStorage.getItem('poble');
+      const poble = await AsyncStorage.getItem('poble').then((response) => JSON.parse(response));
       if (poble) {
-        var pobleParsed = JSON.parse(poble);
-        registerForPushNotificationsAsync('FESTIVITAT', { festivitat_id: pobleParsed.festivitat.id })
-        NavigationService.navigate('LlistatDies', { poble : pobleParsed});
+        NavigationService.navigate('LlistatDies', {poble : poble});
       } else {
         NavigationService.navigate('Selector');
       }

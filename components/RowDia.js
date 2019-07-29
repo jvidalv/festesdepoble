@@ -16,19 +16,19 @@ export default function RowDia(props) {
   if(dia){
     return (
       <TouchableOpacity
-        style={[styles.Row, {backgroundColor: (index % 2 ? Colors.llistat1 : Colors.llistat2)}]}
+        style={[styles.Row, {backgroundColor: (index % 2 ? Colors.llistat1 : Colors.llistat2) + 'D9'}]}
         onPress={callback}
         delayPressIn={50}
         >
-        <View style={{width: 20, marginRight: 20, backgroundColor: colors[index], opacity: 0.8}}/>
+        <View style={[styles.BarraLateral, {backgroundColor: colors[index]}]}/>
         <View style={styles.ContainerTextLeft}>
-          <Text style={[styles.TextLeft, {fontFamily: 'open-sans',  fontWeight: 'bold'}]}>
+          <Text style={[styles.TextLeft, {fontFamily: 'open-bold',  fontWeight: 'bold'}]}>
             {dia.nom_especial ? dia.nom_especial : dia.noms.nom_dalt + ' ' + dia.noms.nom_baix}
           </Text>
             {dia.nom_especial ? <Text style={[styles.TextLeft, {fontSize: 16, fontFamily: 'open-sans'}]}>
                 {dia.noms.nom_dalt + ' ' + dia.noms.nom_baix}
               </Text> : null }
-          <Text style={[styles.TextLeft, styles.TextNumEvents]}>
+          <Text style={[styles.TextLeft, styles.TextNumEvents, {backgroundColor: (index % 2 ? Colors.llistat2 : Colors.llistat1)}]}>
             { dia.numero_events } { dia.numero_events > 1 ? 'events' : 'event'}
           </Text>
         </View>
@@ -56,7 +56,10 @@ const colors = ['violet', 'green', 'blue', 'gold', 'red', 'indigo', 'orange', 't
 const styles = StyleSheet.create({
   Row:{
     minHeight: 110,
-    backgroundColor:'blue', paddingRight: 20, flexDirection: 'row',
+    paddingRight: 20, flexDirection: 'row',
+  },
+  BarraLateral :{
+    width: 20, marginRight: 20, opacity: 0.8
   },
   TextLeft:{
     fontSize: 20,
@@ -88,6 +91,6 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   TextNumEvents : {
-    fontSize: 13, fontFamily: 'open-sans', marginTop: 5
+    fontSize: 13, fontFamily: 'open-sans', marginTop: 5, paddingHorizontal: 3, borderRadius: 3
   }
 });

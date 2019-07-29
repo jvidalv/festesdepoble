@@ -7,52 +7,56 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Share
+  Share,
+  ImageBackground
 } from 'react-native';
 import MapViewModal from '../components/MapViewModal';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import { compartir } from '../helpers/Compartir';
+import fondo from '../assets/images/patro-festa.jpg';
 
 export default function EventScreen( props ) {
   const { event } = props.navigation.state.params;
   return (
-    <ScrollView style={styles.container}>
-        <View style={[styles.contentContainer]}>
-          <Text style={[styles.title, {color: Colors.roigos}]}>{event.nom}</Text>
-        </View>
-        <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2}]}>
-          <Text style={styles.titleContent}>A on és?</Text>
-          <Text numberOfLines={1} style={styles.textContent}>
-            {event.localitzacio}
-          </Text>
-        </View>
-        <View style={[styles.contentContainer, { backgroundColor: Colors.llistat1}]}>
-          <Text style={styles.titleContent}>Quan és?</Text>
-          <Text numberOfLines={1} style={styles.textContent}>
-            A les {event.hora_inici}{event.hora_fi ? ' fins les ' + event.hora_fi : ''}
-          </Text>
-        </View>
-        <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2}]}>
-          <Text style={styles.titleContent}>Més informació</Text>
-          <Text style={styles.textContent}>{event.descripcio}</Text>
-        </View>
-        { event.organitzador ? <View style={[styles.contentContainer, { backgroundColor: Colors.llistat1}]}>
-          <Text style={styles.titleContent}>Organitzador</Text>
-          <Text style={styles.textContent}>{event.organitzador}</Text>
-        </View> : null }
-        {  event.latitude && event.longitude ? <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2}]}>
-          <Text style={styles.titleContent}>Localització al mapa</Text>
-          <MapViewModal event={event}/>
-        </View> : null }
-    </ScrollView>
+    <ImageBackground source={fondo} style={styles.container} imageStyle={{flex:1 , resizeMode: 'repeat'}}>
+      <ScrollView style={styles.container}>
+          <View style={[styles.contentContainer]}>
+            <Text style={[styles.title, {color: Colors.roigos}]}>{event.nom}</Text>
+          </View>
+          <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2}]}>
+            <Text style={styles.titleContent}>A on és?</Text>
+            <Text numberOfLines={1} style={styles.textContent}>
+              {event.localitzacio}
+            </Text>
+          </View>
+          <View style={[styles.contentContainer, { backgroundColor: Colors.llistat1}]}>
+            <Text style={styles.titleContent}>Quan és?</Text>
+            <Text numberOfLines={1} style={styles.textContent}>
+              A les {event.hora_inici}{event.hora_fi ? ' fins les ' + event.hora_fi : ''}
+            </Text>
+          </View>
+          <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2}]}>
+            <Text style={styles.titleContent}>Més informació</Text>
+            <Text style={styles.textContent}>{event.descripcio}</Text>
+          </View>
+          { event.organitzador ? <View style={[styles.contentContainer, { backgroundColor: Colors.llistat1}]}>
+            <Text style={styles.titleContent}>Organitzador</Text>
+            <Text style={styles.textContent}>{event.organitzador}</Text>
+          </View> : null }
+          {  event.latitude && event.longitude ? <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2}]}>
+            <Text style={styles.titleContent}>Localització al mapa</Text>
+            <MapViewModal event={event}/>
+          </View> : null }
+      </ScrollView>
+    </ImageBackground>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.llistat1,
+    backgroundColor: Colors.llistat1 + 'D9',
   },
   contentContainer : {
     padding: 15,
