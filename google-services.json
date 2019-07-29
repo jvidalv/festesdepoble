@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "630474734231",
+    "firebase_url": "https://festes-de-poble.firebaseio.com",
+    "project_id": "festes-de-poble",
+    "storage_bucket": "festes-de-poble.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:630474734231:android:8b151b80be5e6f4c",
+        "android_client_info": {
+          "package_name": "josep.festespoble"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "630474734231-2rf98vo81tfq82r5bh49u91enjuu576b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "josep.festespoble",
+            "certificate_hash": "f97b6a4e9434b1231ff449ddc7847271c5d39779"
+          }
+        },
+        {
+          "client_id": "630474734231-bflbkknqtl7t55h6bi6jhvj6ihnc4jts.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1ONg-w0hKTUntgpekHKjjPOXupRM7k1Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "630474734231-bflbkknqtl7t55h6bi6jhvj6ihnc4jts.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

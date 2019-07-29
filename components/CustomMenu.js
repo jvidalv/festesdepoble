@@ -57,11 +57,11 @@ const styles = StyleSheet.create({
     fontSize: 16, color: Colors.titolsPantalles, fontFamily: 'open-sans'
   },
   ContainerTop:{
-    backgroundColor:Colors.taronjaLogo, paddingLeft: 10, marginBottom: -28, paddingTop: 30, paddingBottom: 10, alignItems: 'flex-start', justifyContent: 'center',
+    backgroundColor:Colors.corporatiu, paddingLeft: 10, marginBottom: -28, paddingTop: 30, paddingBottom: 10, alignItems: 'flex-start', justifyContent: 'center',
     borderBottomWidth: 6, borderColor: 'white'
   },
   ContainerBottom:{
-    position:'absolute', bottom: 0, width: '100%', paddingHorizontal: 15, paddingVertical: 10, backgroundColor: Colors.taronjaLogo,
+    position:'absolute', bottom: 0, width: '100%', paddingHorizontal: 15, paddingVertical: 10, backgroundColor: Colors.corporatiu,
     borderTopWidth: 6, borderColor: 'white'
   },
   botoBottom : {
