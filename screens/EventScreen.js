@@ -24,27 +24,27 @@ export default function EventScreen( props ) {
           <View style={[styles.contentContainer]}>
             <Text style={[styles.title, {color: Colors.roigos}]}>{event.nom}</Text>
           </View>
-          <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2}]}>
+          <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2 + 'CC'}]}>
             <Text style={styles.titleContent}>A on és?</Text>
             <Text numberOfLines={1} style={styles.textContent}>
               {event.localitzacio}
             </Text>
           </View>
-          <View style={[styles.contentContainer, { backgroundColor: Colors.llistat1}]}>
+          <View style={[styles.contentContainer, { backgroundColor: Colors.llistat1 + 'CC'}]}>
             <Text style={styles.titleContent}>Quan és?</Text>
             <Text numberOfLines={1} style={styles.textContent}>
               A les {event.hora_inici}{event.hora_fi ? ' fins les ' + event.hora_fi : ''}
             </Text>
           </View>
-          <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2}]}>
+          <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2 + 'CC'}]}>
             <Text style={styles.titleContent}>Més informació</Text>
             <Text style={styles.textContent}>{event.descripcio}</Text>
           </View>
-          { event.organitzador ? <View style={[styles.contentContainer, { backgroundColor: Colors.llistat1}]}>
+          { event.organitzador ? <View style={[styles.contentContainer, { backgroundColor: Colors.llistat1 + 'CC'}]}>
             <Text style={styles.titleContent}>Organitzador</Text>
             <Text style={styles.textContent}>{event.organitzador}</Text>
           </View> : null }
-          {  event.latitude && event.longitude ? <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2}]}>
+          {  event.latitude && event.longitude ? <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2 + 'CC'}]}>
             <Text style={styles.titleContent}>Localització al mapa</Text>
             <MapViewModal event={event}/>
           </View> : null }

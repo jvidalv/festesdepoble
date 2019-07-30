@@ -14,7 +14,7 @@ export default function RowEsdeveniment(props) {
   const {event, index, callback} = props;
   return (
     <TouchableOpacity
-      style={[styles.Row, {backgroundColor: (index % 2 ? Colors.llistat1 : Colors.llistat2)}]}
+      style={[styles.Row, {backgroundColor: (index % 2 ? Colors.llistat1 : Colors.llistat2) + 'CC'}]}
       onPress={callback}
       delayPressIn={50}
       >
