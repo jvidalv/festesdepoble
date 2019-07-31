@@ -27,11 +27,11 @@ export default function RowEsdeveniment(props) {
         </Text> : null}
       </View>
       <View style={styles.ContainerTextRight}>
-        <Text numberOfLines={2} style={styles.TextRightTop}>
+        <Text numberOfLines={3} style={styles.TextRightTop}>
           {event.nom}
         </Text>
         <View style={{flexDirection: 'row', alingItems : 'center'}}>
-          <Text style={styles.TextRightBottom}>
+          <Text numberOfLines={1} style={styles.TextRightBottom}>
             {event.localitzacio}
           </Text>
         </View>
@@ -61,11 +61,11 @@ const styles = StyleSheet.create({
   },
   TextLeft:{
     fontSize: 12,
-    fontFamily: 'open-sans',
+    fontFamily: 'open-bold',
     textTransform:'uppercase'
   },
   TextTop:{
-    fontFamily: 'open-sans',
+    fontFamily: 'open-bold',
     color: Colors.roigos,
     fontWeight: 'bold'
   },
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
   TextRightTop:{
     fontSize: 14,
-    fontFamily: 'open-sans',
+    fontFamily: 'open-bold',
     fontWeight: 'bold'
   },
   TextRightBottom:{

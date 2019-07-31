@@ -84,7 +84,7 @@ export default function ContactarScreen( props )
           <View style={styles.form}>
             <View style={styles.formInput}>
               <Text style={styles.textInput}>
-                Nom i Cognom
+                Nom i cognom
               </Text>
               <TextInput
                 onChangeText = {(text) => setNom(text)}
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   textInput : {
-    fontFamily: 'open-sans', fontWeight: 'bold'
+    fontFamily: 'open-bold'
   },
   input : {
     backgroundColor: Colors.llistat2,
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
 });
 
 ContactarScreen.navigationOptions = ( props ) => {
-  const { poble } = props.screenProps;
+  const amagarMenu = props.navigation.getParam("amagarMenu");
   return {
     title: 'Contactar',
     headerStyle: {
@@ -274,9 +274,9 @@ ContactarScreen.navigationOptions = ( props ) => {
       textTransform: 'uppercase',
     },
     headerRight: (
-      poble ? <TouchableOpacity style={styles.botoMenu} onPress={() =>  props.navigation.openDrawer()}>
+       amagarMenu ? null : <TouchableOpacity style={styles.botoMenu} onPress={() =>  props.navigation.openDrawer()}>
          <Ionicons name="md-menu" size={22} color={Colors.titolsPantalles} />
-       </TouchableOpacity> : null
+       </TouchableOpacity>
      )
   }
 };

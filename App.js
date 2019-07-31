@@ -59,6 +59,7 @@ async function loadResourcesAsync() {
       'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       'mon-regular': require('./assets/fonts/Montserrat-Regular.ttf'),
       'mon-bold': require('./assets/fonts/Montserrat-Bold.ttf'),
+      'mon-black': require('./assets/fonts/Montserrat-Black.ttf'),
       'mon-medium': require('./assets/fonts/Montserrat-Medium.ttf'),
       'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
       'open-bold': require('./assets/fonts/OpenSans-Bold.ttf'),

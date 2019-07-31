@@ -51,13 +51,13 @@ const styles = StyleSheet.create({
     flex: 1, backgroundColor:Colors.llistat1
   },
   TextTop: {
-    fontSize: 20, color: Colors.titolsPantalles, fontFamily: 'open-sans', fontWeight: 'bold'
+    fontSize: 24, color: Colors.titolsPantalles, fontFamily: 'open-bold'
   },
   SubtextTop: {
     fontSize: 16, color: Colors.titolsPantalles, fontFamily: 'open-sans'
   },
   ContainerTop:{
-    backgroundColor:Colors.corporatiu, paddingLeft: 10, marginBottom: -28, paddingTop: 40, paddingBottom: 10, alignItems: 'flex-start', justifyContent: 'center',
+    backgroundColor:Colors.corporatiu, paddingLeft: 10, marginBottom: -28, paddingTop: 40, paddingBottom: 20, alignItems: 'flex-start', justifyContent: 'center',
   },
   ContainerBottom:{
     position:'absolute', bottom: 0, width: '100%', paddingHorizontal: 15, paddingVertical: 10, backgroundColor: Colors.corporatiu,

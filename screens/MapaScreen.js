@@ -95,7 +95,7 @@ export default function MapaScreen(props) {
           { infoMarker.visible ? <View style={styles.infoMarker}>
             <ScrollView style={styles.infoMarkerContent}>
               <View style={[styles.contentContainer]}>
-                <Text  numberOfLines={2} style={[styles.title, {color: Colors.roigos}]}>{infoMarker.event.nom}</Text>
+                <Text  numberOfLines={3} style={[styles.title, {color: Colors.roigos}]}>{infoMarker.event.nom}</Text>
               </View>
               <View style={[styles.contentContainer]}>
                 <Text style={styles.textContent}>
@@ -104,7 +104,7 @@ export default function MapaScreen(props) {
               </View>
               <View style={[styles.contentContainer]}>
                 <Text style={styles.titleContent}>Més informació</Text>
-                <Text numberOfLines={2} style={styles.textContent}>{infoMarker.event.descripcio}</Text>
+                <Text numberOfLines={5} style={styles.textContent}>{infoMarker.event.descripcio}</Text>
               </View>
             </ScrollView>
               <View style={styles.buttonsRow}>
@@ -233,7 +233,7 @@ const colors = ['violet', 'green', 'blue', 'gold', 'red', 'indigo', 'orange', 't
 MapaScreen.navigationOptions = (props) => {
   const { poble } = props.screenProps;
   return {
-    title: poble && poble.festivitat ? poble.festivitat.nom : 'Events al mapa',
+    title: 'Events al mapa',
     headerBackTitle: 'Mapa',
     headerStyle: {
       backgroundColor: Colors.corporatiu,

@@ -8,7 +8,7 @@ import ContactarScreen from '../screens/ContactarScreen';
 const SelectionStack = createStackNavigator(
   {
     SelectorPobles : SelectorPoblesScreen,
-    Contactar : ContactarScreen,
+    Contactar : {screen : ContactarScreen, params : { amagarMenu : true }},
   },
   {
     cardStyle: {

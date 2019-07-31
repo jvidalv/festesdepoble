@@ -25,7 +25,7 @@ export default function EventScreen( props ) {
             <Text style={[styles.title, {color: Colors.roigos}]}>{event.nom}</Text>
           </View>
           <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2 + 'CC'}]}>
-            <Text style={styles.titleContent}>A on és?</Text>
+            <Text style={styles.titleContent}>On és?</Text>
             <Text numberOfLines={1} style={styles.textContent}>
               {event.localitzacio}
             </Text>
@@ -44,7 +44,7 @@ export default function EventScreen( props ) {
             <Text style={styles.titleContent}>Organitzador</Text>
             <Text style={styles.textContent}>{event.organitzador}</Text>
           </View> : null }
-          {  event.latitude && event.longitude ? <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2 + 'CC'}]}>
+          {  event.latitude && event.longitude ? <View style={[styles.contentContainer]}>
             <Text style={styles.titleContent}>Localització al mapa</Text>
             <MapViewModal event={event}/>
           </View> : null }
