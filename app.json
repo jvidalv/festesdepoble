@@ -8,10 +8,10 @@
     "githubUrl" : "https://github.com/jvidalv/festesdepoble",
     "platforms": [
       "ios",
-      "android",
+      "android"
     ],
     "primaryColor" : "#ff7300",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "orientation": "default",
     "icon": "./assets/images/logo-mobile.png",
     "splash": {
@@ -30,7 +30,7 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber" : "1.0.1",
+      "buildNumber" : "1.1.0",
       "bundleIdentifier": "josep.festespoble",
       "icon": "./assets/images/logo-ios.png",
       "config" : {
@@ -39,7 +39,7 @@
     },
     "android": {
       "package": "josep.festespoble",
-      "versionCode": 6,
+      "versionCode": 7,
       "googleServicesFile": "./google-services.json",
       "config": {
         "googleMaps": {
