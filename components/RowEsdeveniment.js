@@ -11,18 +11,18 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
 export default function RowEsdeveniment(props) {
-  const {event, index, callback} = props;
+  const {event, index, callback, mostrarDia} = props;
   return (
     <TouchableOpacity
       style={[styles.Row, {backgroundColor: (index % 2 ? Colors.llistat1 : Colors.llistat2) + 'CC'}]}
       onPress={callback}
       delayPressIn={50}
       >
-      <View style={[styles.ContainerLeft, event.es_dia_normal ? { width:  '12%', justifyContent: 'center', alignItems: 'center'} : {width: '20%' }]}>
+      <View style={[styles.ContainerLeft, event.es_dia_normal && !mostrarDia ? { width:  '12%', justifyContent: 'center', alignItems: 'center'} : {width: '20%' }]}>
         <Text numberOfLines={1} style={[styles.TextLeft, styles.TextTop]}>
-          {!event.es_dia_normal ? event.dia_inici : event.hora_inici}
+          {!event.es_dia_normal || mostrarDia ? event.dia_inici : event.hora_inici}
         </Text>
-        { !event.es_dia_normal ? <Text style={styles.TextLeft}>
+        { !event.es_dia_normal || mostrarDia ? <Text style={styles.TextLeft}>
           {event.hora_inici}
         </Text> : null}
       </View>
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   ContainerLeft:{
     alignItems: 'flex-end',
     justifyContent: 'center',
-    width: '20%'
+    width: '18%'
   },
   ContainerRight:{
     alignItems: 'center',

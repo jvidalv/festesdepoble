@@ -1,17 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {
   Image,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  AsyncStorage
 } from 'react-native';
-import { createDrawerNavigator, DrawerItems, SafeAreaView  } from 'react-navigation';
+import { DrawerItems, SafeAreaView  } from 'react-navigation';
 import Colors from '../constants/Colors';
-import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import { usePoble } from "../helpers/Storage";
 import logo from '../assets/images/fem-poble-blanc.png';

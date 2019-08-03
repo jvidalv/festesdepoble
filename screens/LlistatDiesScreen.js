@@ -1,22 +1,19 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState} from 'react';
 import {
-  Image,
-  Platform,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
-  View,
-  AsyncStorage,
-  ImageBackground
+  ImageBackground,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import NavigationService from '../components/NavigationService.js';
-import RowDia  from '../components/RowDia';
-import ErrorConnexio  from '../components/ErrorConnexio';
+import RowDia from '../components/RowDia';
+import RowEsdeveniment from '../components/RowEsdeveniment';
+import ErrorConnexio from '../components/ErrorConnexio';
+import SenseResultats from '../components/SenseResultats';
+import BarraBuscadora from '../components/BarraBuscadora';
 import Colors from '../constants/Colors';
-import Urls from '../constants/Urls';
-import { useFetchFestivitat } from "../helpers/Hooks";
+import { useFetchFestivitat, useFetchEvents } from "../helpers/Hooks";
 import { useDesconectar } from "../helpers/Desconectar";
 import fondo from '../assets/images/patro-festa.jpg';
 
@@ -27,17 +24,34 @@ const AnarAlDia = ( dia ) => {
   NavigationService.navigate('LlistatEvents', { dia });
 }
 
+const AnarAlEvent = ( event ) => {
+  NavigationService.navigate('Event', { event });
+}
+
 export default function LlistatDiesScreen(props)
 {
-  const [data, loading, setLoading] = useFetchFestivitat();
+  const [data, loading, setLoading] = useFetchFestivitat()
+  const [filtre, setFiltre] = useState('')
+  const [dataEvent, loadingEvents] = useFetchEvents(filtre)
+  const searchBarProps = {setFiltre, loadingEvents, filtre}
   return (
-    <ImageBackground source={fondo} style={styles.container} imageStyle={{flex:1 , resizeMode: 'repeat'}}>
+    <ImageBackground style={styles.container} source={fondo} imageStyle={{flex:1 , resizeMode: 'repeat'}}>
       <ScrollView
         style={styles.scrollContainer}
-        contentContainerStyle={styles.contentContainer}>
-        { loading || data === false ? arrayLoader.map((dia, index) => <RowDia key={dia} index={index}  />)
-          : data && data.id && data.dies.length ? data.dies.map(( dia, index ) => <RowDia key={dia.id} index={index} dia={dia} callback={() => AnarAlDia(dia)} />)
-          : <ErrorConnexio callback={setLoading.bind(this)}/> }
+        contentContainerStyle={styles.contentContainer}
+        >
+        <BarraBuscadora {...searchBarProps} />
+        { dataEvent && filtre ? dataEvent.length === 0 ? <SenseResultats/> : dataEvent.map((event, index) => <RowEsdeveniment
+            mostrarDia={true}
+            key={event.id}
+            index={index}
+            event={event}
+            callback={() => AnarAlEvent(event)}
+            />)
+          :
+          loading || data === false ? arrayLoader.map((dia, index) => <RowDia key={dia} index={index}  />)
+            : data && data.id && data.dies.length ? data.dies.map(( dia, index ) => <RowDia key={dia.id} index={index} dia={dia} callback={() => AnarAlDia(dia)} />)
+            : <ErrorConnexio callback={setLoading.bind(this)}/> }
       </ScrollView>
     </ImageBackground>
   );

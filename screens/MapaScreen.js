@@ -1,14 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {
-  Image,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   ActivityIndicator,
-  AsyncStorage
 } from 'react-native';
 import MapView from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
@@ -16,16 +13,13 @@ import RowFiltre from '../components/RowFiltre';
 import NavigationService from '../components/NavigationService';
 import ErrorConnexio  from '../components/ErrorConnexio';
 import { useFetchFestivitat } from "../helpers/Hooks";
-import { usePoble } from "../helpers/Storage";
-import { useDemanarLocalitzacio } from '../helpers/PermisosLocalitzacio';
 import { compartir } from '../helpers/Compartir';
 import Colors from '../constants/Colors';
-import Urls from '../constants/Urls';
-import logoNegre from '../assets/images/fem-poble-negre.png';
 
-export default function MapaScreen(props) {
-  const [loadingPoble, poble] = usePoble();
+export default function MapaScreen(props)
+{
   const [data, loading, setLoading] = useFetchFestivitat();
+
   // seleccionats
   useEffect(() => {
     setDiesSeleccionats(data.dies)
@@ -45,7 +39,7 @@ export default function MapaScreen(props) {
           loadingEnabled={true}
           showsCompass={false}
           style={{flex: 1}}
-          initialRegion={{ latitude: poble.latitude, longitude: poble.longitude, latitudeDelta: 0.0022, longitudeDelta: 0.0121 }}
+          initialRegion={{ latitude: data.latitude, longitude: data.longitude, latitudeDelta: 0.0022, longitudeDelta: 0.0121 }}
           onPress={() => setInfoMarker({visible : false, event: false})}
         >
           { data.dies.map((dia, index) => {
@@ -57,8 +51,8 @@ export default function MapaScreen(props) {
                 touchable={true}
                 coordinate={{ latitude: event.latitude, longitude: event.longitude, latitudeDelta: 0.0022, longitudeDelta: 0.0121 }}
                 onPress={() => setInfoMarker({visible : true, dia: dia, event: event, color: colors[index]})}/>)
-              : null
-          })}
+              : null }
+          )}
         </MapView>
         : <ErrorConnexio callback={setLoading.bind(this)}/> }
         <View
@@ -68,7 +62,7 @@ export default function MapaScreen(props) {
             <TouchableOpacity
                style={styles.filterText}
                onPress={() => setFiltreDies(!filtreDies)}>
-              <Text style={{fontSize: 18, color: 'black', fontFamily: 'mon-bold'}}>Filtrar per dia</Text>
+              <Text style={styles.filterHeaderText}>Filtrar per dia</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.filterIcon}
@@ -93,40 +87,41 @@ export default function MapaScreen(props) {
           }
           </View>
           { infoMarker.visible ? <View style={styles.infoMarker}>
-            <ScrollView style={styles.infoMarkerContent}>
-              <View style={[styles.contentContainer]}>
-                <Text  numberOfLines={3} style={[styles.title, {color: Colors.roigos}]}>{infoMarker.event.nom}</Text>
-              </View>
-              <View style={[styles.contentContainer]}>
-                <Text style={styles.textContent}>
-                  {infoMarker.event.localitzacio}, {infoMarker.event.dia_inici} a les {infoMarker.event.hora_inici}{infoMarker.event.hora_fi ? ' fins les ' + infoMarker.event.hora_fi : ''}
-                </Text>
-              </View>
-              <View style={[styles.contentContainer]}>
-                <Text style={styles.titleContent}>Més informació</Text>
-                <Text numberOfLines={5} style={styles.textContent}>{infoMarker.event.descripcio}</Text>
-              </View>
-            </ScrollView>
-              <View style={styles.buttonsRow}>
-                <TouchableOpacity
-                  style={[styles.botonsEsquerra, {backgroundColor: infoMarker.color, opacity: 0.9}]}
-                  onPress={() => NavigationService.navigate('LlistatEvents', { dia: infoMarker.dia })}
-                  >
-                  <Ionicons name="md-list" size={26} color="white" />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.botonsEsquerra, {width: '15%', backgroundColor: Colors.taronjaLogo + 'E6'}]}
-                  onPress={() => NavigationService.navigate('Event', {  event: infoMarker.event })}
-                  >
-                  <Ionicons name="md-eye" size={26} color="white" />
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={[styles.botoModal, {backgroundColor: Colors.roigos + 'E6'}]}
-                  onPress={() => compartir(infoMarker.event)}
-                  >
-                  <Ionicons name="md-share" size={26} color="white" />
-                </TouchableOpacity>
+              <View style={[styles.infoMarkerContent, {flexDirection: 'row'}]}>
+                <View style={{width: '10%'}}>
+                  <TouchableOpacity
+                    style={[styles.botonsEsquerra, {backgroundColor: infoMarker.color}]}
+                    onPress={() => NavigationService.navigate('LlistatEvents', { dia: infoMarker.dia })}
+                    >
+                    <Ionicons name="md-list" size={26} color="white" />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                      style={[styles.botonsEsquerra, {marginVertical: 3, backgroundColor: '#000000E6'}]}
+                      onPress={() => NavigationService.navigate('Event', {  event: infoMarker.event })}
+                      >
+                      <Ionicons name="md-eye" size={26} color="white" />
+                    </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.botonsEsquerra, {backgroundColor: Colors.roigos + 'E6'}]}
+                    onPress={() => compartir(infoMarker.event)}
+                    >
+                    <Ionicons name="md-share" size={26} color="white" />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.infoMarkerContent}>
+                  <View style={[styles.contentContainer]}>
+                    <Text  numberOfLines={3} style={[styles.title, {color: Colors.roigos}]}>{infoMarker.event.nom}</Text>
+                  </View>
+                  <View style={[styles.contentContainer]}>
+                    <Text style={styles.textContent}>
+                      {infoMarker.event.localitzacio}, {infoMarker.event.dia_inici} a les {infoMarker.event.hora_inici}{infoMarker.event.hora_fi ? ' fins les ' + infoMarker.event.hora_fi : ''}
+                    </Text>
+                  </View>
+                  <View style={[styles.contentContainer]}>
+                    <Text style={styles.titleContent}>Més informació</Text>
+                    <Text numberOfLines={5} style={styles.textContent}>{infoMarker.event.descripcio}</Text>
+                  </View>
+                </View>
               </View>
             </View>
             : null }
@@ -158,6 +153,9 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems: 'center',
   },
+  filterHeaderText : {
+    fontSize: 18, color: 'black', fontFamily: 'open-bold'
+  },
   filterIcon: {
     backgroundColor: Colors.corporatiu,
     marginLeft: 5,
@@ -169,16 +167,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   contentContainer : {
-    padding: 10,
+    padding: 5,
     paddingVertical : 5,
   },
   title : {
     fontSize: 16,
-    fontFamily: 'mon-bold',
+    fontFamily: 'open-bold',
   },
   titleContent : {
     marginBottom: 3,
-    fontFamily : 'mon-bold'
+    fontFamily : 'open-bold'
   },
   textContent : {
     fontFamily: 'open-sans',
@@ -193,7 +191,7 @@ const styles = StyleSheet.create({
     right: 10,
   },
   infoMarkerContent : {
-    backgroundColor: '#ffffffE6',
+    flex: 1, marginLeft: 5, backgroundColor: '#ffffffE6',
   },
   Loader : {
     flex: 1,
@@ -204,14 +202,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row', marginTop: 5
   },
   botonsEsquerra : {
-    width: '10%', marginRight: 5, justifyContent: 'center', alignItems: 'center'
+    opacity: 0.9, justifyContent: 'center', alignItems: 'center', flex: 1
   },
   botoMenu : {
    flexDirection: "row",justifyContent: "flex-end", paddingRight:20, width: 160
  },
-   botoModal : {
-     backgroundColor: '#ffffff', flexGrow: 1, justifyContent: 'center', alignItems: 'center', padding: 10
-   }
+  botoModal : {
+    backgroundColor: '#ffffff', flexGrow: 1, justifyContent: 'center', alignItems: 'center', padding: 10
+  }
 });
 
 const estaSeleccionat = (sel, llistat) => {
@@ -231,7 +229,6 @@ const gestionarSeleccionats = (sel, llistat) => {
 const colors = ['violet', 'green', 'blue', 'gold', 'red', 'indigo', 'orange', 'tan', 'linen',  'blue', 'yellow', 'teal',  'tomato']
 
 MapaScreen.navigationOptions = (props) => {
-  const { poble } = props.screenProps;
   return {
     title: 'Events al mapa',
     headerBackTitle: 'Mapa',

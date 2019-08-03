@@ -1,13 +1,10 @@
 import React from 'react';
 import {
-  Image,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Share,
   ImageBackground
 } from 'react-native';
 import MapViewModal from '../components/MapViewModal';
@@ -22,7 +19,7 @@ export default function EventScreen( props ) {
     <ImageBackground source={fondo} style={styles.container} imageStyle={{flex:1 , resizeMode: 'repeat'}}>
       <ScrollView style={styles.container}>
           <View style={[styles.contentContainer]}>
-            <Text style={[styles.title, {color: Colors.roigos}]}>{event.nom}</Text>
+            <Text style={[styles.title]}>{event.nom}</Text>
           </View>
           <View style={[styles.contentContainer, { backgroundColor: Colors.llistat2 + 'CC'}]}>
             <Text style={styles.titleContent}>On és?</Text>
@@ -64,18 +61,18 @@ const styles = StyleSheet.create({
   },
   title : {
     fontSize: 18,
-    fontFamily: 'mon-bold',
+    fontFamily: 'open-bold',
   },
   titleContent : {
     marginBottom: 5,
-    fontFamily : 'mon-bold'
+    fontFamily : 'open-bold'
   },
   textContent : {
     fontFamily: 'open-sans',
     fontSize: 16,
   },
   botoMenu : {
-   flexDirection: "row",justifyContent: "flex-end", paddingRight:20, width: 160
+   flexDirection: "row", justifyContent: "flex-end", paddingRight:20, width: 160
   }
 });
 

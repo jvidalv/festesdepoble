@@ -1,7 +1,5 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import {
-  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -28,12 +26,12 @@ export default function RowDia(props) {
             {dia.nom_especial ? <Text style={[styles.TextLeft, {fontSize: 16, fontFamily: 'open-sans'}]}>
                 {dia.noms.nom_dalt + ' ' + dia.noms.nom_baix}
               </Text> : null }
-          <Text style={[styles.TextLeft, styles.TextNumEvents, {backgroundColor: (index % 2 ? Colors.llistat2 : Colors.llistat1)}]}>
+          <Text style={[styles.TextNumEvents]}>
             { dia.numero_events } { dia.numero_events > 1 ? 'events' : 'event'}
           </Text>
         </View>
         <View style={styles.ContainerTextRight}>
-          <Ionicons name="md-arrow-forward" size={20} color="black" />
+          <Ionicons name="md-arrow-round-forward" size={20} color="black" />
         </View>
       </TouchableOpacity>
     )
@@ -63,7 +61,6 @@ const styles = StyleSheet.create({
   },
   TextLeft:{
     fontSize: 20,
-    textTransform:'uppercase'
   },
   ContainerTextLeft:{
     paddingVertical:20,
@@ -91,6 +88,6 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   TextNumEvents : {
-    fontSize: 13, fontFamily: 'open-sans', marginTop: 5, paddingHorizontal: 3, borderRadius: 3
+    fontSize: 14, fontFamily: 'open-bold', marginTop: 5, paddingHorizontal: 3, borderRadius: 3, color: Colors.roigos
   }
 });

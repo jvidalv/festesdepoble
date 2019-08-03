@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -10,7 +9,7 @@ import Colors from '../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function RowFiltre( props ) {
-  const { item, items, nom, seleccionat, seleccionats, gestionarSeleccionats, setSeleccionats, bgcolor } = props
+  const { item, nom, seleccionat, seleccionats, gestionarSeleccionats, setSeleccionats, bgcolor } = props
   return (
     <View style={[styles.Row, { opacity: (seleccionat ? 1 : 0.6) }]}>
       <TouchableOpacity

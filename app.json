@@ -24,7 +24,7 @@
     },
     "notification" : {
       "icon": "./assets/images/icon_notis.png",
-      "color": "#ff7400",
+      "color": "#ff7400"
     },
     "assetBundlePatterns": [
       "**/*"

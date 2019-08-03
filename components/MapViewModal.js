@@ -1,12 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {
   StyleSheet,
-  Text,
   View,
-  ActivityIndicator
 } from 'react-native';
 import MapView from 'react-native-maps';
-import { useDemanarLocalitzacio } from '../helpers/PermisosLocalitzacio';
 
 export default function MapaScreen(props) {
   const { event } = props

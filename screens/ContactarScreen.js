@@ -1,15 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {
   Image,
-  Platform,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   TextInput,
   View,
   ActivityIndicator,
-  KeyboardAvoidingView
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import * as WebBrowser from 'expo-web-browser';
@@ -17,8 +14,6 @@ import { Ionicons } from '@expo/vector-icons';
 import Urls from '../constants/Urls';
 import { usePoble } from "../helpers/Storage";
 import Colors from '../constants/Colors';
-import NavigationService from '../components/NavigationService.js';
-import RowEsdeveniment  from '../components/RowEsdeveniment';
 import logoNegre from '../assets/images/fem-poble-negre.png';
 import logoBlanc from '../assets/images/fem-poble-blanc.png';
 

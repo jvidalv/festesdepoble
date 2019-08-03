@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {
   ActivityIndicator,
   AsyncStorage,
-  StatusBar,
   StyleSheet,
   View,
   Image
@@ -10,7 +9,6 @@ import {
 import Colors from '../constants/Colors';
 import NavigationService from '../components/NavigationService.js';
 import logo from '../assets/images/logo-loading.png';
-import { registerForPushNotificationsAsync } from "../helpers/PermisosPush";
 
 export default function AuthLoadingScreen(props) {
   useEffect( () => {

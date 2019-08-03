@@ -1,12 +1,9 @@
 import React from 'react';
 import {
-  Image,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
   ImageBackground
 } from 'react-native';
 import Colors from '../constants/Colors';

@@ -15,7 +15,6 @@ import RowPoble from '../components/RowPoble';
 import ErrorConnexio  from '../components/ErrorConnexio';
 import Colors from '../constants/Colors';
 import Urls from '../constants/Urls';
-import { Ionicons } from '@expo/vector-icons';
 import logo from '../assets/images/logo.png';
 
 const AnarAContacta = ( ) => {

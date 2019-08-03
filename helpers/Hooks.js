@@ -3,7 +3,8 @@ import { AsyncStorage } from 'react-native';
 import Urls from '../constants/Urls';
 
 // fetch general
-function useFetchPoble() {
+function useFetchPoble()
+{
   const [data, setData] = useState(false);
   const [loading, setLoading] = useState(true);
   const fetchUrl = async () => {
@@ -24,7 +25,8 @@ function useFetchPoble() {
 }
 
 // recuperar festivitat en tots los events, has de passar un objecte poble
-function useFetchFestivitat(){
+function useFetchFestivitat()
+{
   const [data, setData] = useState(false);
   const [loading, setLoading] = useState(true);
   const fetchUrl = async () => {
@@ -55,4 +57,42 @@ function useFetchFestivitat(){
   return [data, loading, setLoading];
 }
 
-export { useFetchPoble, useFetchFestivitat };
+function useFetchEvents(filtre)
+{
+  const [dataEvents, setDataEvents] = useState(false)
+  const [loadingEvents, setLoadingEvents] = useState(false)
+
+  const fetchUrl = async () => {
+    if(!loadingEvents) setLoadingEvents(true)
+    const events = await AsyncStorage.getItem('events').then((response) => JSON.parse(response))
+    var soloEvents = []
+    var filtreM = filtre.toUpperCase()
+    events.dies.forEach((dia) => {
+      soloEvents = [...soloEvents, ...dia.events.filter((event) => {
+        let nom = event.nom.toUpperCase()
+        let localitzacio = event.localitzacio.toUpperCase()
+        let descripcio = event.descripcio.toUpperCase()
+        let organitzador = event.organitzador ? event.organitzador.toUpperCase() : '-1'
+        if( 
+            nom.search(filtreM) != -1           || 
+            localitzacio.search(filtreM) != -1  ||
+            descripcio.search(filtreM) != -1    ||
+            organitzador.search(filtreM) != -1
+          ) return event
+      })]
+    })
+   
+    setDataEvents(soloEvents)
+    setTimeout(()=> setLoadingEvents(false), 1000)
+  }
+
+  useEffect(() => {
+    if(filtre.length > 3){
+      fetchUrl()
+    } 
+  }, [filtre]);
+
+  return [dataEvents, loadingEvents, setLoadingEvents];
+}
+
+export { useFetchPoble, useFetchFestivitat, useFetchEvents };

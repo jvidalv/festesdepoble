@@ -33,7 +33,7 @@ LlistatStack.navigationOptions = {
   drawerIcon : ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name="md-list-box"
+      name="md-list"
     />
   ),
 };
@@ -53,7 +53,7 @@ MapaStack.navigationOptions = {
   drawerIcon : ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name="md-planet"
+      name="md-globe"
     />
   ),
 };
@@ -94,7 +94,7 @@ ContactarStack.navigationOptions = {
   drawerIcon : ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name="md-chatbubbles"
+      name="md-chatboxes"
     />
   ),
 };

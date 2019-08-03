@@ -1,4 +1,3 @@
-import React, { useState, useEffect} from 'react';
 import { AsyncStorage } from 'react-native';
 import NavigationService from '../components/NavigationService.js';
 

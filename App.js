@@ -13,9 +13,9 @@ import { registerForPushNotificationsAsync } from "./helpers/PermisosPush";
 const TopLevelNavigator = createStackNavigator({LlistatDiesScreen : LlistatDiesScreen})
 const AppContainer = createAppContainer(TopLevelNavigator);
 
-export default function App(props) {
+export default function App(props) 
+{
   const [isLoadingComplete, setLoadingComplete] = useState(false);
-  // carreguem poble si esta disponible
   const [poble, setPoble] = useState(null);
 
   useEffect( () => {
@@ -67,7 +67,7 @@ async function loadResourcesAsync() {
   ]);
 }
 
-function handleLoadingError(error: Error) {
+function handleLoadingError(error) {
   // In this case, you might want to report the error to your error reporting
   // service, for example Sentry
   console.warn(error);
