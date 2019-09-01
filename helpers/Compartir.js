@@ -5,8 +5,8 @@ async function compartir(object){
     try {
       const result = await Share.share({
         title: object.nom,
-        message: object.share + (Platform.OS !== 'ios' ? ' (https://bit.ly/2YFqLA8) 📳' : ''),
-        url: Platform.OS === 'ios' ? 'https://apple.co/31m1fOj' : 'https://bit.ly/2YFqLA8',
+        message: object.share + (Platform.OS !== 'ios' ? ' (https://www.fempoble.app/#moduls) 📳' : ''),
+        url: 'https://www.fempoble.app/#moduls',
       });
 
       if (result.action === Share.sharedAction) {
