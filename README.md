@@ -5,9 +5,11 @@
 
 **Festes de Poble is a mobile application made with React Native, using the power of Hooks, that lets you navigate all the events of small towns around my birthplace,
 so you don't need to depend on paper anymore.**
+- iOS : https://apps.apple.com/es/app/festes-de-poble/id1474236635
+- Android : https://play.google.com/store/apps/details?id=josep.festespoble&hl=es
 
 _2020 Update : It is an "old" project that I expect to rewrite soon, for a more modern code, with latest practices
-(Hooks, Context) you could check my blog https://github.com/jvidalv/react-vvlog_
+(Hooks, Context) you could check my blog https://github.com/jvidalv/react-vvlog_.
 ### As it core
 
 Build with 🔥 Expo and React.useState, also:
