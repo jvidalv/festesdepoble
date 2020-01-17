@@ -7,11 +7,11 @@ const titolsPantalles = "#ffffff";
 const roigos = '#670606';
 
 export default {
-  corporatiu,
-  fondo,
-  titolsPantalles,
-  llistat1,
-  llistat2,
-  roigos,
-  taronjaLogo
+    corporatiu,
+    fondo,
+    titolsPantalles,
+    llistat1,
+    llistat2,
+    roigos,
+    taronjaLogo
 };

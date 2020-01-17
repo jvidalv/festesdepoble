@@ -5,12 +5,12 @@
     "slug": "festes-de-poble",
     "privacy": "public",
     "sdkVersion": "33.0.0",
-    "githubUrl" : "https://github.com/jvidalv/festesdepoble",
+    "githubUrl": "https://github.com/jvidalv/festesdepoble",
     "platforms": [
       "ios",
       "android"
     ],
-    "primaryColor" : "#ff7300",
+    "primaryColor": "#ff7300",
     "version": "1.1.0",
     "orientation": "default",
     "icon": "./assets/images/logo-mobile.png",
@@ -22,7 +22,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "notification" : {
+    "notification": {
       "icon": "./assets/images/icon_notis.png",
       "color": "#ff7400"
     },
@@ -30,10 +30,10 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber" : "1.1.0",
+      "buildNumber": "1.1.0",
       "bundleIdentifier": "josep.festespoble",
       "icon": "./assets/images/logo-ios.png",
-      "config" : {
+      "config": {
         "googleMapsApiKey": "AIzaSyBfe_U0pfrpqYjkxkcUVpo5W7yxAs1_hhg"
       }
     },
@@ -44,10 +44,10 @@
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyBfe_U0pfrpqYjkxkcUVpo5W7yxAs1_hhg"
-        },
+        }
       },
-      "adaptiveIcon" : {
-        "backgroundColor" : "#ff7300"
+      "adaptiveIcon": {
+        "backgroundColor": "#ff7300"
       }
     }
   }
