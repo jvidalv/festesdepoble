@@ -9,7 +9,7 @@ so you don't need to depend on paper anymore.**
 - Android : https://play.google.com/store/apps/details?id=josep.festespoble&hl=es
 
 _2020 Update : It is an "old" project that I expect to rewrite soon, for a more modern code, with latest practices
-(Hooks, Context) you could check my blog https://github.com/jvidalv/react-vvlog_.
+(Hooks, Context) you could check my blog [react-vvlog](https://github.com/jvidalv/react-vvlog)_.
 ### As it core
 
 Build with 🔥 Expo and React.useState, also:
@@ -20,10 +20,10 @@ Mention to all my family that tested the app ♥.
 
 ### The data
 
-All the data (Events and towns) come from my backend `https://www.fempoble.app`.
+All the data (Events and towns) come from my backend [Fem Poble](https://www.fempoble.app).
 
 It is a classic backend that lets you introduce the data graphically, so anyone, without any kind of tech
 experience could write all the information of their town.
 
-You can check the source code of it here `https://github.com/jvidalv/yii2-old-fempoble`, anyway I planning
+You can check the source code of it here [yii2-old-fempoble](https://github.com/jvidalv/yii2-old-fempoble), anyway I planning
 to move it all to VVADMIN, and make fempoble a module of it. 
